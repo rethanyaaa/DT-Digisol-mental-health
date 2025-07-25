@@ -9,10 +9,10 @@ import { WordRotate } from "./WordRotateComp";
 const Navbar = () => {
   const navigate = useNavigate();
   const { token, setToken, userData } = useContext(AppContext);
-  const [showMenu, setShowMenu] = useState(false);
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [showMenu, setShowMenu] = useState(false); // For mobile menu
+  const [showProfileMenu, setShowProfileMenu] = useState(false); // For profile dropdown
 
+  // logout function to clear token from local storage and context
   const logout = () => {
     setToken(false);
     localStorage.removeItem("token");
@@ -20,7 +20,7 @@ const Navbar = () => {
   };
 
   // Handle click outside for profile menu
-  useEffect(() => {
+  React.useEffect(() => {
     const handleProfileClickOutside = (event) => {
       if (event.target.closest(".profile-menu-container") === null) {
         setShowProfileMenu(false);
@@ -29,6 +29,8 @@ const Navbar = () => {
 
     if (showProfileMenu) {
       document.addEventListener("mousedown", handleProfileClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleProfileClickOutside);
     }
 
     return () => {
@@ -36,16 +38,18 @@ const Navbar = () => {
     };
   }, [showProfileMenu]);
 
-  // Handle click outside mobile menu
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (event.target.closest(".menu-container") === null) {
-        setShowMenu(false);
-      }
-    };
+  // handle click outside the page-nav menu
+  const handleClickOutside = (event) => {
+    if (event.target.closest(".menu-container") === null) {
+      setShowMenu(false);
+    }
+  };
 
+  React.useEffect(() => {
     if (showMenu) {
       document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
@@ -53,8 +57,10 @@ const Navbar = () => {
     };
   }, [showMenu]);
 
+  // handle user login btn - all clicks
   const handleAuthNavigation = (type) => {
     const currentPath = window.location.pathname;
+
     if (currentPath === "/login") {
       navigate(`/login?type=${type}`, { replace: true });
       window.location.reload();
@@ -62,6 +68,8 @@ const Navbar = () => {
       navigate(`/login?type=${type}`);
     }
   };
+
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,22 +81,20 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between py-3 px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
-        scrolled ? "shadow-md bg-[#8b5cf6]" : "bg-[#a78bfa]"
+      className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between text-sm py-4 bg-[#a78bfa] transition-shadow duration-300 ${
+        scrolled ? "shadow-md" : "shadow-none"
       }`}
       style={{
-        background: scrolled 
-          ? "linear-gradient(135deg, #8b5cf6 100%)" 
-          : "linear-gradient(135deg, #a78bfa 100%)",
+        background: "linear-gradient(135deg, #a78bfa 100%)",
         borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
       }}
     >
       {/* Logo */}
-      <span className="text-xl font-bold text-purple-800 hidden md:block">
-        MENTAL HEALTH
-      </span>
+       <span className="ml-2 text-xl p-2 font-bold text-purple-800 hidden md:block">
+          MENTAL HEALTH
+        </span>
 
-      {/* Desktop Navigation */}
+      {/* Navigation Links */}
       <ul className="hidden md:flex items-center gap-5 font-medium text-white">
         <NavLink to={"/"}>
           <li className="py-1 hover:text-[#fef08a] transition-colors">HOME</li>
@@ -121,9 +127,10 @@ const Navbar = () => {
           </li>
         </NavLink>
 
+        {/* Admin/Doctor Login Button */}
         {!token && (
           <NavLink to={import.meta.env.VITE_ADMIN_PANEL_URL} target="_blank">
-            <button className="px-3 py-2 border border-white bg-transparent text-white rounded flex items-center gap-1 hover:bg-white hover:text-[#a78bfa] transition-colors">
+            <button className="px-3 py-2 w-fit border border-white bg-transparent text-white rounded flex items-center gap-1 hover:bg-white hover:text-[#a78bfa] transition-colors">
               <WordRotate words={["Admin", "Doctor"]} /> Login
             </button>
           </NavLink>
@@ -131,198 +138,174 @@ const Navbar = () => {
       </ul>
 
       {/* Auth Buttons/Profile */}
-      <div className="flex items-center gap-4">
-        {token && userData ? (
-          <div className="relative profile-menu-container">
-            <button
+      <div className="flex items-center mr-5">
+        <div className="flex items-center gap-2">
+          {token && userData ? (
+            <div
+              className="flex items-center gap-2 cursor-pointer relative lg:mx-12 p-1.5 select-none profile-menu-container"
               onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="flex items-center gap-2 focus:outline-none"
             >
-              <img
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded border object-cover"
-                src={userData.image}
-                alt="profile"
-              />
-              <ChevronDown
-                size={18}
-                className={`text-gray-500 transition-transform ${
-                  showProfileMenu ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                <button
-                  onClick={() => {
-                    navigate("my-profile");
-                    setShowProfileMenu(false);
-                  }}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  My Profile
-                </button>
-                <button
-                  onClick={() => {
-                    navigate("my-appointments");
-                    setShowProfileMenu(false);
-                  }}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  My Appointments
-                </button>
-                <div className="border-t border-gray-200 my-1"></div>
-                <button
-                  onClick={logout}
-                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center gap-1"
-                >
-                  <span>Logout</span>
-                  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                </button>
+              {/* ... (keep existing profile dropdown code) ... */}
+              <div className="flex items-center gap-px sm:gap-1">
+                <img
+                  className="size-8 sm:size-9 aspect-square object-cover rounded-[5px] border"
+                  src={userData.image}
+                  alt="profile pic"
+                />
+                <ChevronDown
+                  size={18}
+                  className={`text-gray-500 transition-transform duration-300 ease-in-out ${
+                    showProfileMenu ? "-rotate-180" : "rotate-0"
+                  }`}
+                />
               </div>
-            )}
-          </div>
-        ) : (
-          <div className="hidden sm:flex items-center gap-2">
-            <button
-              onClick={() => handleAuthNavigation("login")}
-              className="border border-white bg-transparent text-white px-4 py-2 rounded hover:bg-white hover:text-[#a78bfa] transition-colors"
-            >
-              Sign In
-            </button>
+              <div
+                className={`absolute top-0 right-0 pt-12 text-base font-medium text-black z-20 ${
+                  showProfileMenu ? "block" : "hidden"
+                } motion-translate-x-in-[0%] motion-translate-y-in-[-5%] motion-duration-[0.26s] motion-ease-linear`}
+              >
+                <div className="min-w-48 bg-gray-100 border border-gray-200 rounded-[7px] text-[15px] font-normal flex flex-col gap-1 p-2">
+                  <p
+                    onClick={() => navigate("my-profile")}
+                    className="px-2 py-1 rounded hover:bg-black/5 transition-colors duration-200 ease-in cursor-pointer"
+                  >
+                    My Profile
+                  </p>
+                  <p
+                    onClick={() => navigate("my-appointments")}
+                    className="px-2 py-1 rounded hover:bg-black/5 transition-colors duration-200 ease-in cursor-pointer"
+                  >
+                    My Appointments
+                  </p>
+                  <hr className="my-[1px] mx-2 rounded-full" />
+                  <p
+                    onClick={logout}
+                    className="px-2 py-1 rounded hover:text-red-500 hover:bg-black/5 transition-all duration-100 ease-in cursor-pointer w-full flex items-center justify-start gap-1 group"
+                  >
+                    <span>Logout</span>
+                    <ArrowRight
+                      size={15}
+                      className="group-hover:translate-x-1 transition-transform duration-200 ease-linear"
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-1.5">
+              <button
+                onClick={() => handleAuthNavigation("login")}
+                className="border border-white bg-transparent text-white px-4 py-2 rounded font-normal tracking-wide hidden sm:block hover:bg-white hover:text-[#a78bfa] transition-colors"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => handleAuthNavigation("signup")}
+                className="bg-[#fef08a] border border-[#fef08a] text-[#7c3aed] px-4 py-2 rounded font-normal tracking-wide hidden sm:block hover:bg-[#fde68a] transition-colors"
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+        </div>
+        {/* ------------ sign up btn on mobile ------------ */}
+        {!token && (
+          <>
             <button
               onClick={() => handleAuthNavigation("signup")}
-              className="bg-[#fef08a] border border-[#fef08a] text-[#7c3aed] px-4 py-2 rounded hover:bg-[#fde68a] transition-colors"
+              className="bg-primary border border-primary text-white px-2.5 py-1.5 mr-3 rounded-[4px] font-normal text-xs block sm:hidden active:scale-[90%] transition-transform duration-100 ease-in select-none"
             >
               Sign Up
             </button>
-          </div>
+          </>
         )}
-
-        {/* Mobile Sign Up Button */}
-        {!token && (
-          <button
-            onClick={() => handleAuthNavigation("signup")}
-            className="sm:hidden bg-[#fef08a] text-[#7c3aed] px-3 py-1.5 rounded text-sm"
+        {/* --------------------------------- mobile menu ---------------------------- */}
+        <div>
+          {/* bar icon */}
+          <Menu
+            onClick={() => setShowMenu(true)}
+            size={30}
+            className="md:hidden text-white ml-3"
+          />
+          {/* overlay */}
+          {showMenu && (
+            <div
+              className="fixed inset-0 bg-black/50 z-10"
+              onClick={() => setShowMenu(false)}
+            />
+          )}
+          <div
+            className={`menu-container ${
+              showMenu
+                ? "fixed w-full h-fit py-10 px-2 rounded-b-2xl flex"
+                : "hidden"
+            } inset-0 top-0 z-20 overflow-hidden bg-[#a78bfa] backdrop-blur-xl flex-col items-center justify-center pt-5 px-2 shadow-xl`}
           >
-            Sign Up
-          </button>
-        )}
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setShowMenu(true)}
-          className="md:hidden text-white focus:outline-none"
-          aria-label="Open menu"
-        >
-          <Menu size={30} />
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {showMenu && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="fixed inset-0 bg-black/50" onClick={() => setShowMenu(false)}></div>
-          <div className="relative bg-[#a78bfa] min-h-screen w-4/5 max-w-sm ml-auto shadow-xl">
-            <div className="flex justify-between items-center p-4 border-b border-white/20">
-              <span className="text-xl font-bold text-purple-800">MENU</span>
-              <button
+            {/* close icon */}
+            <div className="flex w-full items-center justify-end">
+              <X
+                size={30}
                 onClick={() => setShowMenu(false)}
-                className="text-white focus:outline-none"
-                aria-label="Close menu"
-              >
-                <X size={30} />
-              </button>
+                className="mr-2 text-primary"
+              />
             </div>
-
-            <nav className="p-4">
-              <ul className="space-y-4">
-                <li>
+            {/* navigation links */}
+            <ul className="mt-10 uppercase flex flex-col-reverse items-center gap-7 text-base font-medium min-w-full select-none">
+              <NavLink onClick={() => setShowMenu(false)} to={"/"}>
+                <p>Home</p>
+                <hr className="border-none outline-none h-0.5 bg-primary w-full rounded-full m-auto hidden" />
+              </NavLink>
+              <NavLink onClick={() => setShowMenu(false)} to={"/doctors"}>
+                <p>All Doctors</p>
+                <hr className="border-none outline-none h-0.5 bg-primary w-full rounded-full m-auto hidden" />
+              </NavLink>
+              {token && (
+                <>
                   <NavLink
-                    to="/"
                     onClick={() => setShowMenu(false)}
-                    className="block py-2 text-white hover:text-[#fef08a]"
+                    to={"/assessments"}
                   >
-                    HOME
+                    <p>Self-Assessment</p>
+                    <hr className="border-none outline-none h-0.5 bg-primary w-full rounded-full m-auto hidden" />
                   </NavLink>
-                </li>
-                <li>
                   <NavLink
-                    to="/doctors"
                     onClick={() => setShowMenu(false)}
-                    className="block py-2 text-white hover:text-[#fef08a]"
+                    to={"/my-assessments"}
                   >
-                    ALL DOCTORS
+                    <p>My Results</p>
+                    <hr className="border-none outline-none h-0.5 bg-primary w-full rounded-full m-auto hidden" />
                   </NavLink>
-                </li>
-                {token && (
-                  <>
-                    <li>
-                      <NavLink
-                        to="/assessments"
-                        onClick={() => setShowMenu(false)}
-                        className="block py-2 text-white hover:text-[#fef08a]"
-                      >
-                        SELF-ASSESSMENT
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to="/my-assessments"
-                        onClick={() => setShowMenu(false)}
-                        className="block py-2 text-white hover:text-[#fef08a]"
-                      >
-                        MY RESULTS
-                      </NavLink>
-                    </li>
-                  </>
-                )}
-                <li>
-                  <NavLink
-                    to="/about"
-                    onClick={() => setShowMenu(false)}
-                    className="block py-2 text-white hover:text-[#fef08a]"
-                  >
-                    ABOUT
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/contact"
-                    onClick={() => setShowMenu(false)}
-                    className="block py-2 text-white hover:text-[#fef08a]"
-                  >
-                    CONTACT
-                  </NavLink>
-                </li>
-              </ul>
-
-              {!token && (
-                <div className="mt-8">
-                  <button
-                    onClick={() => {
-                      handleAuthNavigation("login");
-                      setShowMenu(false);
-                    }}
-                    className="w-full mb-2 py-2 border border-white text-white rounded"
-                  >
-                    Sign In
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleAuthNavigation("signup");
-                      setShowMenu(false);
-                    }}
-                    className="w-full py-2 bg-[#fef08a] text-[#7c3aed] rounded"
-                  >
-                    Sign Up
-                  </button>
-                </div>
+                </>
               )}
-            </nav>
+              <NavLink onClick={() => setShowMenu(false)} to={"/about"}>
+                <p>About</p>
+                <hr className="border-none outline-none h-0.5 bg-primary w-full rounded-full m-auto hidden" />
+              </NavLink>
+              <NavLink onClick={() => setShowMenu(false)} to={"/contact"}>
+                <p>Contact</p>
+                <hr className="border-none outline-none h-0.5 bg-primary w-full rounded-full m-auto hidden" />
+              </NavLink>
+
+              {/* go to Admin/doctor panel login */}
+              {!token && (
+                <NavLink
+                  to={"https://prescripto-admin-ka03.onrender.com"}
+                  target="_blank"
+                >
+                  <button className="mb-6 min-w-[124px] h-10 bg-primary text-white font-normal rounded relative">
+                    <span className="absolute top-1/2 -translate-y-1/2 left-3">
+                      <WordRotate words={["Admin", "Doctor"]} />
+                    </span>
+                    <span className="absolute top-1/2 -translate-y-1/2 right-3">
+                      Login
+                    </span>
+                  </button>
+                </NavLink>
+              )}
+            </ul>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
