@@ -5,7 +5,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const MyProfile = () => {
-  const { userData, setUserData, token, backendUrl, loadUserProfleData } =
+  const { userData, setUserData, token, backendUrl, loadUserProfileData } =
     useContext(AppContext)
 
   const [isEdit, setIsEdit] = useState(false)
@@ -64,7 +64,7 @@ const MyProfile = () => {
 
       if (data.success) {
         toast.success(data.message)
-        await loadUserProfleData()
+        await loadUserProfileData()
         setIsEdit(false)
         setImage(false)
       } else {
