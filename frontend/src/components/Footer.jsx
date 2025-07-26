@@ -114,7 +114,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
           <p className="flex items-center gap-1 text-white/60 text-sm">
             <Copyright size={14} />
-            <span>Mental Health 2025 - All Rights Reserved</span>
+            <span>MOOD MANTRA 2025 - All Rights Reserved</span>
           </p>
           <p className="text-white/60 text-sm mt-3 md:mt-0">
             Made with ❤️ for better mental health

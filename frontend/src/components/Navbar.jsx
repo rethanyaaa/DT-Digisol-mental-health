@@ -85,23 +85,42 @@ const Navbar = () => {
         scrolled ? "shadow-md" : "shadow-none"
       }`}
       style={{
-        background: "linear-gradient(135deg, #a78bfa 100%)",
+        background: "#7c3aed",
         borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
       }}
     >
       {/* Logo */}
-       <span className="ml-2 text-xl p-2 font-bold text-purple-800 hidden md:block">
-          MENTAL HEALTH
-        </span>
+     
+  
+  <img
+    src="logoo.png"
+    alt="Logo"
+     style={{ 
+              maxWidth: '23%', 
+              height: 'auto',
+               
+            }}
+  />
+
+ 
+ 
 
       {/* Navigation Links */}
-      <ul className="hidden md:flex items-center gap-5 font-medium text-white">
+      <ul className="hidden md:flex items-center gap-5 font-medium text-white text-base">
         <NavLink to={"/"}>
           <li className="py-1 hover:text-[#fef08a] transition-colors">HOME</li>
         </NavLink>
+        <NavLink to={"/services"}>
+          <li className="py-1 hover:text-[#fef08a] transition-colors">SERVICES</li>
+        </NavLink>
         <NavLink to={"/doctors"}>
           <li className="py-1 hover:text-[#fef08a] transition-colors">
-            ALL DOCTORS
+            EXPERTS
+          </li>
+        </NavLink>
+        <NavLink to={"/ourTeam"}>
+          <li className="py-1 hover:text-[#fef08a] transition-colors">
+            OUR TEAM
           </li>
         </NavLink>
         {token && (
@@ -201,7 +220,7 @@ const Navbar = () => {
               </button>
               <button
                 onClick={() => handleAuthNavigation("signup")}
-                className="bg-[#fef08a] border border-[#fef08a] text-[#7c3aed] px-4 py-2 rounded font-normal tracking-wide hidden sm:block hover:bg-[#fde68a] transition-colors"
+                className="bg-[#FCD34D] border border-[#fef08a] text-[#7c3aed] px-4 py-2 rounded font-normal tracking-wide hidden sm:block hover:bg-[#fde68a] transition-colors"
               >
                 Sign Up
               </button>
