@@ -1,10 +1,10 @@
- import React, { useContext } from 'react';
-import { AppContext } from '../context/AppContext';
+ import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 import { motion } from "framer-motion";
-import { 
-  FaUserMd, 
-  FaStar, 
-  FaCalendarAlt, 
+import {
+  FaUserMd,
+  FaStar,
+  FaCalendarAlt,
   FaRupeeSign,
   FaHeart,
   FaGlobe,
@@ -14,238 +14,479 @@ import {
   FaHandsHelping,
   FaLeaf,
   FaBalanceScale,
-  FaLightbulb
-} from 'react-icons/fa';
-import { GiMeditation, GiBrain, GiHealthNormal } from 'react-icons/gi';
-import { RiTeamFill } from 'react-icons/ri';
+  FaLightbulb,
+} from "react-icons/fa";
+import { GiMeditation, GiBrain, GiHealthNormal } from "react-icons/gi";
+import { RiTeamFill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import BookAppointmentCTA from "../components/BookAppointment";
 
 const OurTeam = () => {
   const { doctors } = useContext(AppContext);
-
+  const navigate = useNavigate();
+  
   // Stats data
   const stats = [
-    { value: "5000+", label: "Patients Helped", icon: <FaHeart className="text-2xl" /> },
-    { value: "100+", label: "Years Combined", icon: <FaCalendarAlt className="text-2xl" /> },
-    { value: "98%", label: "Satisfaction Rate", icon: <FaStar className="text-2xl" /> },
-    { value: "24/7", label: "Support Available", icon: <FaShieldAlt className="text-2xl" /> }
+    {
+      value: "5000+",
+      label: "Patients Helped",
+      icon: <FaHeart className="text-2xl" />,
+    },
+    {
+      value: "100+",
+      label: "Years Combined",
+      icon: <FaCalendarAlt className="text-2xl" />,
+    },
+    {
+      value: "98%",
+      label: "Satisfaction Rate",
+      icon: <FaStar className="text-2xl" />,
+    },
+    {
+      value: "24/7",
+      label: "Support Available",
+      icon: <FaShieldAlt className="text-2xl" />,
+    },
   ];
 
   return (
-    <div className="min-h-screen px-6 md:px-12 py-12 bg-gradient-to-br from-indigo-50 to-purple-50">
-      {/* Hero Section */}
-      <div className="text-center mb-16 max-w-4xl mx-auto">
-        <motion.h1 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl font-bold text-indigo-800 mb-4"
-        >
-          Meet Our Compassionate Healthcare Team
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg text-gray-600 mb-8"
-        >
-          Our dedicated professionals bring together decades of experience, cutting-edge knowledge, 
-          and a patient-centered approach to provide the best possible care for your mental health needs.
-        </motion.p>
-        
-        {/* Stats Grid */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
-        >
-          {stats.map((stat, index) => (
-            <div key={index} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-indigo-600 mb-3 flex justify-center">
-                {stat.icon}
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800">{stat.value}</h3>
-              <p className="text-gray-500">{stat.label}</p>
-            </div>
-          ))}
-        </motion.div>
-      </div>
+    <div style={{ 
+      minHeight: '100vh',
+      padding: '3rem',
+      backgroundColor: '#f9fafb',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Decorative elements */}
+      <div style={{
+        position: 'absolute',
+        top: '-50px',
+        right: '-50px',
+        width: '200px',
+        height: '200px',
+        borderRadius: '50%',
+        backgroundColor: 'rgba(124, 58, 237, 0.05)',
+        zIndex: 0
+      }}></div>
+      
+      <div style={{
+        position: 'absolute',
+        bottom: '-30px',
+        left: '-30px',
+        width: '150px',
+        height: '150px',
+        borderRadius: '50%',
+        backgroundColor: 'rgba(252, 211, 77, 0.05)',
+        zIndex: 0
+      }}></div>
 
-      {/* Our Approach Section */}
-      <div className="bg-white rounded-2xl shadow-md p-8 mb-16 max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-indigo-800 mb-6 text-center">Our Therapeutic Approach</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <GiBrain className="text-indigo-600 text-xl" />
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {/* Hero Section */}
+        <div style={{ 
+          textAlign: 'center', 
+          marginBottom: '4rem',
+          maxWidth: '900px',
+          marginLeft: 'auto',
+          marginRight: 'auto'
+        }}>
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              color: '#7c3aed',
+              fontSize: '2.5rem',
+              fontWeight: '700',
+              marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '1rem'
+            }}
+          >
+            <RiTeamFill />
+            Meet Our Compassionate Team
+          </motion.h1>
+          
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            style={{
+              fontSize: '1.1rem',
+              lineHeight: '1.7',
+              color: '#4b5563',
+              marginBottom: '2rem'
+            }}
+          >
+            Our dedicated professionals bring together decades of experience,
+            cutting-edge knowledge, and a patient-centered approach to provide the
+            best possible care for your mental health needs.
+          </motion.p>
+
+          {/* Stats Grid */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1.5rem',
+              marginBottom: '3rem'
+            }}
+          >
+            {stats.map((stat, index) => (
+              <div
+                key={index}
+                style={{
+                  backgroundColor: 'white',
+                  padding: '1.5rem',
+                  borderRadius: '15px',
+                  boxShadow: '0 3px 10px rgba(0, 0, 0, 0.05)',
+                  transition: 'box-shadow 0.3s ease'
+                }}
+              >
+                <div style={{ 
+                  color: '#7c3aed',
+                  marginBottom: '0.75rem',
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}>
+                  {stat.icon}
+                </div>
+                <h3 style={{ 
+                  fontSize: '1.75rem',
+                  fontWeight: '700',
+                  color: '#1f2937',
+                  textAlign: 'center',
+                  marginBottom: '0.25rem'
+                }}>{stat.value}</h3>
+                <p style={{ 
+                  color: '#6b7280',
+                  textAlign: 'center'
+                }}>{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Our Approach Section */}
+        <div style={{
+          backgroundColor: 'white',
+          borderRadius: '20px',
+          padding: '2.5rem',
+          marginBottom: '4rem',
+          maxWidth: '1200px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)',
+          borderLeft: '6px solid #7c3aed'
+        }}>
+          <h2 style={{
+            color: '#7c3aed',
+            fontSize: '2rem',
+            fontWeight: '600',
+            marginBottom: '2rem',
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.8rem'
+          }}>
+            <FaHandsHelping style={{ color: '#f59e0b' }} />
+            Our Therapeutic Approach
+          </h2>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                backgroundColor: '#f5f3ff',
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1.5rem auto'
+              }}>
+                <GiBrain style={{ color: '#7c3aed', fontSize: '1.5rem' }} />
+              </div>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                marginBottom: '0.75rem',
+                color: '#1f2937'
+              }}>
+                Evidence-Based Therapies
+              </h3>
+              <p style={{ 
+                color: '#6b7280',
+                lineHeight: '1.6'
+              }}>
+                We utilize scientifically validated treatment methods tailored to
+                each individual's needs.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">Evidence-Based Therapies</h3>
-            <p className="text-gray-600">
-              We utilize scientifically validated treatment methods tailored to each individual's needs.
-            </p>
-          </div>
-          <div className="text-center">
-            <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaUserMd className="text-indigo-600 text-xl" />
+            
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                backgroundColor: '#f5f3ff',
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1.5rem auto'
+              }}>
+                <FaUserMd style={{ color: '#7c3aed', fontSize: '1.5rem' }} />
+              </div>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                marginBottom: '0.75rem',
+                color: '#1f2937'
+              }}>
+                Personalized Care
+              </h3>
+              <p style={{ 
+                color: '#6b7280',
+                lineHeight: '1.6'
+              }}>
+                Every treatment plan is customized to address your unique
+                circumstances and goals.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">Personalized Care</h3>
-            <p className="text-gray-600">
-              Every treatment plan is customized to address your unique circumstances and goals.
-            </p>
-          </div>
-          <div className="text-center">
-            <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <GiHealthNormal className="text-indigo-600 text-xl" />
+            
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                backgroundColor: '#f5f3ff',
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1.5rem auto'
+              }}>
+                <GiHealthNormal style={{ color: '#7c3aed', fontSize: '1.5rem' }} />
+              </div>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: '600',
+                marginBottom: '0.75rem',
+                color: '#1f2937'
+              }}>
+                Holistic Healing
+              </h3>
+              <p style={{ 
+                color: '#6b7280',
+                lineHeight: '1.6'
+              }}>
+                Addressing mind, body, and spirit for comprehensive mental
+                wellness.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">Holistic Healing</h3>
-            <p className="text-gray-600">
-              Addressing mind, body, and spirit for comprehensive mental wellness.
-            </p>
           </div>
         </div>
-      </div>
 
-      {/* Doctors Grid */}
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-indigo-800 mb-2 text-center">Our Expert Practitioners</h2>
-        <p className="text-gray-600 mb-12 text-center max-w-3xl mx-auto">
-          Each of our professionals brings unique expertise and a shared commitment to your mental well-being.
-        </p>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {doctors.map((doctor, index) => (
-            <motion.div
-              key={doctor._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              whileHover={{ y: -5 }}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all cursor-pointer flex flex-col h-full"
-            >
-              {/* Image Container */}
-              <div className="relative h-72 overflow-hidden">
-                <img
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  src={doctor.image}
-                  alt={doctor.name}
-                />
-                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium ${
-                  doctor.available 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {doctor.available ? 'Available' : 'Not Available'}
-                </div>
-              </div>
-              
-              {/* Doctor Info */}
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-gray-800 mb-1">
-                    {doctor.name}
-                  </h3>
-                  <p className="text-indigo-600 font-medium">{doctor.speciality}</p>
-                </div>
-                
-                <div className="flex items-center mb-3">
-                  <div className="flex mr-2">
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar key={i} className={`${i < 4 ? 'text-yellow-500' : 'text-gray-300'} mr-1`} />
-                    ))}
-                  </div>
-                  <span className="text-sm text-gray-600">(120 reviews)</span>
-                </div>
-                
-                <div className="mb-4">
-                  <p className="text-gray-600 text-sm line-clamp-3">
-                    {doctor.bio || `Specialized in ${doctor.speciality} with ${doctor.experience} years of experience helping patients achieve better mental health.`}
-                  </p>
-                </div>
-                
-                <div className="mt-auto pt-4 border-t border-gray-100">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <FaRupeeSign className="text-gray-500 mr-1" />
-                      <span className="font-bold text-indigo-700">
-                        {doctor.fees} / session
-                      </span>
-                    </div>
-                    <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors">
-                      View Profile
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Values Section */}
-      <div className="bg-indigo-600 rounded-2xl p-12 my-16 max-w-7xl mx-auto bg-gradient-to-r from-indigo-600 to-purple-600">
-        <div className="text-center mb-12 text-white">
-          <h2 className="text-3xl font-bold mb-4">Our Core Values</h2>
-          <p className="text-indigo-100 max-w-2xl mx-auto">
-            These principles guide every interaction with our patients and team members.
+        {/* Doctors Grid */}
+        <div style={{ 
+          maxWidth: '1400px',
+          margin: '0 auto 4rem auto'
+        }}>
+          <h2 style={{
+            color: '#7c3aed',
+            fontSize: '2rem',
+            fontWeight: '600',
+            marginBottom: '0.5rem',
+            textAlign: 'center'
+          }}>
+            Our Expert Practitioners
+          </h2>
+          
+          <p style={{ 
+            color: '#6b7280',
+            textAlign: 'center',
+            maxWidth: '800px',
+            margin: '0 auto 3rem auto',
+            lineHeight: '1.6'
+          }}>
+            Each of our professionals brings unique expertise and a shared
+            commitment to your mental well-being.
           </p>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {[
-            {
-              icon: <FaHandsHelping className="text-2xl" />,
-              title: "Compassion",
-              description: "Meeting every client with empathy and understanding"
-            },
-            {
-              icon: <FaBalanceScale className="text-2xl" />,
-              title: "Integrity",
-              description: "Ethical practice in all our interactions"
-            },
-            {
-              icon: <FaLightbulb className="text-2xl" />,
-              title: "Innovation",
-              description: "Continually evolving our therapeutic approaches"
-            },
-            {
-              icon: <FaGlobe className="text-2xl" />,
-              title: "Accessibility",
-              description: "Breaking down barriers to mental healthcare"
-            },
-            {
-              icon: <RiTeamFill className="text-2xl" />,
-              title: "Collaboration",
-              description: "Team-based care for comprehensive treatment"
-            }
-          ].map((value, index) => (
-            <div 
-              key={index} 
-              className="bg-white bg-opacity-10 rounded-xl p-6 text-center text-white hover:bg-opacity-15 transition-all hover:-translate-y-1"
-            >
-              <div className="bg-white bg-opacity-15 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                {value.icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
-              <p className="text-indigo-100">{value.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="mt-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-12 text-center text-white max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">Ready to Begin Your Healing Journey?</h2>
-        <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
-          Our team is here to support you every step of the way. Schedule your first consultation today.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <button className="px-8 py-3 bg-white text-indigo-700 font-bold rounded-lg hover:bg-gray-100 transition-colors shadow-lg">
-            Book an Appointment
-          </button>
-          <button className="px-8 py-3 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">
-            Meet Our Therapists
-          </button>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: '1.5rem'
+          }}>
+            {doctors.map((doctor, index) => (
+              <motion.div
+               onClick={() => navigate(`/appointment/${doctor._id}`)}
+                key={doctor._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                whileHover={{ scale: 1.05 }}
+                style={{ 
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+                <div style={{ 
+                  position: 'relative',
+                  width: '180px',
+                  height: '180px',
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  border: '4px solid white',
+                  boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)'
+                }}>
+                  <img
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                    src={doctor.image}
+                    alt={doctor.name}
+                  />
+                </div>
+                <h3 style={{
+                  marginTop: '1rem',
+                  fontWeight: '600',
+                  color: '#1f2937'
+                }}>{doctor.name}</h3>
+                <p style={{
+                  color: '#7c3aed',
+                  fontSize: '0.875rem'
+                }}>{doctor.specialization}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
+
+        {/* Values Section */}
+        <div style={{
+          backgroundColor: '#7c3aed',
+          borderRadius: '20px',
+          padding: '3rem',
+          marginBottom: '4rem',
+          maxWidth: '1400px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          background: 'linear-gradient(to right, #7c3aed, #6d28d9)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{ 
+            textAlign: 'center',
+            marginBottom: '3rem',
+            color: 'white',
+            position: 'relative',
+            zIndex: 1
+          }}>
+            <h2 style={{ 
+              fontSize: '2rem',
+              fontWeight: '600',
+              marginBottom: '1rem'
+            }}>
+              Our Core Values
+            </h2>
+            <p style={{ 
+              color: 'rgba(255, 255, 255, 0.9)',
+              maxWidth: '700px',
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              These principles guide every interaction with our patients and team
+              members.
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1.5rem',
+            position: 'relative',
+            zIndex: 1
+          }}>
+            {[
+              {
+                icon: <FaHandsHelping style={{ fontSize: '1.5rem' }} />,
+                title: "Compassion",
+                description: "Meeting every client with empathy and understanding",
+              },
+              {
+                icon: <FaBalanceScale style={{ fontSize: '1.5rem' }} />,
+                title: "Integrity",
+                description: "Ethical practice in all our interactions",
+              },
+              {
+                icon: <FaLightbulb style={{ fontSize: '1.5rem' }} />,
+                title: "Innovation",
+                description: "Continually evolving our therapeutic approaches",
+              },
+              {
+                icon: <FaGlobe style={{ fontSize: '1.5rem' }} />,
+                title: "Accessibility",
+                description: "Breaking down barriers to mental healthcare",
+              },
+              // {
+              //   icon: <RiTeamFill style={{ fontSize: '1.5rem' }} />,
+              //   title: "Collaboration",
+              //   description: "Team-based care for comprehensive treatment",
+              // },
+            ].map((value, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5 }}
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: '15px',
+                  padding: '1.5rem',
+                  textAlign: 'center',
+                  color: 'white',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(5px)'
+                }}
+              >
+                <div style={{ 
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  width: '60px',
+                  height: '60px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem auto'
+                }}>
+                  {value.icon}
+                </div>
+                <h3 style={{ 
+                  fontSize: '1.25rem',
+                  fontWeight: '600',
+                  marginBottom: '0.5rem'
+                }}>{value.title}</h3>
+                <p style={{ 
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.5'
+                }}>{value.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <BookAppointmentCTA />
       </div>
     </div>
   );

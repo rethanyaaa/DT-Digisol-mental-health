@@ -16,7 +16,7 @@ connetDB();
 connectCloudinary();
 
 // -------- middlewares ---------
-app.use(express.json());
+app.use(express.json({ limit: '400mb' }));
 app.use(cors());
 
 // ------ api endpoints ------

@@ -7,7 +7,7 @@ import appointmentModel from '../models/appointmentModel.js'
 import userModel from '../models/userModel.js'
 
 // Api for adding Doctor
-const addDoctor = async (req, res) => {
+ const addDoctor = async (req, res) => {
   try {
     const {
       name,
@@ -19,8 +19,10 @@ const addDoctor = async (req, res) => {
       about,
       fees,
       address
-    } = req.body
-    const imageFile = req.file
+    } = req.body;
+    
+    const imageFile = req.files?.image?.[0]; // When using upload.fields()
+    const videoFile = req.files?.video?.[0]; // When using upload.fields()
 
     // checking for all data to add doctor
     if (
@@ -32,17 +34,18 @@ const addDoctor = async (req, res) => {
       !experience ||
       !about ||
       !fees ||
-      !address
+      !address ||
+      !imageFile // Ensure image is required
     ) {
-      return res.json({ success: false, message: 'Missing Details.' })
+      return res.json({ success: false, message: 'Missing Details.' });
     }
 
-    // validating emailing format
+    // validating email format
     if (!validator.isEmail(email)) {
       return res.json({
         success: false,
         message: 'Please Enter a Valid Email.'
-      })
+      });
     }
 
     // validating strong password
@@ -50,24 +53,35 @@ const addDoctor = async (req, res) => {
       return res.json({
         success: false,
         message: 'Please Enter a Strong Password. (min. 8 characters)'
-      })
+      });
     }
 
     // hashing doctor password
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     // upload image to cloudinary
     const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
       resource_type: 'image'
-    })
-    const imageUrl = imageUpload.secure_url
+    });
+    const imageUrl = imageUpload.secure_url;
+
+    // Upload video if provided
+    let videoUrl = null;
+    if (videoFile) {
+      const videoUpload = await cloudinary.uploader.upload(videoFile.path, {
+        resource_type: 'video',
+        chunk_size: 6000000 // 6MB chunks for larger videos
+      });
+      videoUrl = videoUpload.secure_url;
+    }
 
     // doctor data
     const doctorData = {
       name,
       email,
       image: imageUrl,
+      video: videoUrl, // Add video URL to doctor data
       password: hashedPassword,
       speciality,
       degree,
@@ -76,19 +90,19 @@ const addDoctor = async (req, res) => {
       fees,
       address: JSON.parse(address),
       date: Date.now()
-    }
+    };
 
-    const newDoctor = new doctorModel(doctorData)
-    await newDoctor.save()
+    const newDoctor = new doctorModel(doctorData);
+    await newDoctor.save();
 
-    res.status(201).json({ success: true, message: 'Doctor Added 🎉' })
+    res.status(201).json({ success: true, message: 'Doctor Added 🎉' });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res
       .status(500)
-      .json({ success: false, message: `Server error: ${error.message}` })
+      .json({ success: false, message: `Server error: ${error.message}` });
   }
-}
+};
 
 // API for the admin Login
 const loginAdmin = async (req, res) => {

@@ -1,11 +1,36 @@
  import React from 'react';
-import { FaComments, FaClock, FaClinicMedical, FaUsers, FaHeart, FaLeaf } from 'react-icons/fa';
-import { GiMeditation } from 'react-icons/gi';
+import { 
+  FaComments, 
+  FaClock, 
+  FaClinicMedical, 
+  FaUsers, 
+  FaHeart, 
+  FaLeaf,
+  FaHandHoldingHeart,
+  FaRegSmile,
+  FaBrain,
+  FaBalanceScale,
+  FaChartLine
+} from 'react-icons/fa';
+import { motion } from "framer-motion";
+import { GiMeditation, GiHealthNormal, GiSpellBook } from 'react-icons/gi';
+import { RiMentalHealthLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
+import BookAppointmentCTA from '../components/BookAppointment';
 
 const Services = () => {
+  const navigate = useNavigate();
+  const handleAssessmentClick = () => {
+    if (!token) {
+      navigate('/login?type=login');
+    } else {
+      navigate('/assessments');
+    }
+  };
+
   const services = [
     {
-      icon: <FaComments size={40} color="#7c3aed" />,
+      icon: <FaComments />,
       title: "Talk Therapy & Counseling",
       description: "Personalized one-on-one sessions with licensed therapists to address emotional challenges, life transitions, and personal growth.",
       benefits: [
@@ -14,10 +39,11 @@ const Services = () => {
         "Personalized treatment plans",
         "Weekly or bi-weekly sessions"
       ],
-      whoItsFor: "Ideal for individuals dealing with depression, life transitions, self-esteem issues, or those seeking personal development"
+      whoItsFor: "Ideal for individuals dealing with depression, life transitions, self-esteem issues, or those seeking personal development",
+      color: '#7c3aed'
     },
     {
-      icon: <FaClock size={40} color="#f59e0b" />,
+      icon: <FaClock />,
       title: "24/7 Online Therapy Support",
       description: "Immediate access to professional help through secure video, chat, or phone sessions whenever you need it.",
       benefits: [
@@ -26,10 +52,11 @@ const Services = () => {
         "Emergency sessions available",
         "Same quality as in-person therapy"
       ],
-      whoItsFor: "Perfect for busy professionals, students, parents, or anyone needing flexible access to mental health support"
+      whoItsFor: "Perfect for busy professionals, students, parents, or anyone needing flexible access to mental health support",
+      color: '#f59e0b'
     },
     {
-      icon: <FaClinicMedical size={40} color="#10b981" />,
+      icon: <FaClinicMedical />,
       title: "Offline Counseling Centers",
       description: "Traditional face-to-face therapy in our calming, professionally designed centers across major cities.",
       benefits: [
@@ -38,10 +65,11 @@ const Services = () => {
         "Access to therapeutic tools and resources",
         "Discreet locations for complete privacy"
       ],
-      whoItsFor: "Those who prefer in-person interaction or need a dedicated space away from their daily environment"
+      whoItsFor: "Those who prefer in-person interaction or need a dedicated space away from their daily environment",
+      color: '#10b981'
     },
     {
-      icon: <FaUsers size={40} color="#3b82f6" />,
+      icon: <FaUsers />,
       title: "Group Therapy & Workshops",
       description: "Healing in community with others who share similar experiences, guided by expert facilitators.",
       benefits: [
@@ -50,10 +78,11 @@ const Services = () => {
         "Specialized groups (grief, addiction, parenting)",
         "Monthly workshops on mindfulness and coping skills"
       ],
-      whoItsFor: "Individuals who benefit from community support or want to supplement their individual therapy"
+      whoItsFor: "Individuals who benefit from community support or want to supplement their individual therapy",
+      color: '#3b82f6'
     },
     {
-      icon: <FaHeart size={40} color="#ef4444" />,
+      icon: <FaHeart />,
       title: "Couples & Relationship Counseling",
       description: "Expert guidance to improve communication, resolve conflicts, and strengthen emotional connections.",
       benefits: [
@@ -62,10 +91,11 @@ const Services = () => {
         "Intimacy and trust rebuilding",
         "Parenting partnership guidance"
       ],
-      whoItsFor: "Couples at any stage - dating, engaged, married, or considering separation"
+      whoItsFor: "Couples at any stage - dating, engaged, married, or considering separation",
+      color: '#ef4444'
     },
     {
-      icon: <GiMeditation size={40} color="#8b5cf6" />,
+      icon: <GiMeditation />,
       title: "Stress & Anxiety Management",
       description: "Proven techniques to reduce anxiety, manage stress, and cultivate emotional resilience.",
       benefits: [
@@ -74,175 +104,199 @@ const Services = () => {
         "Cognitive restructuring methods",
         "Personalized stress reduction plans"
       ],
-      whoItsFor: "Anyone experiencing work stress, panic attacks, social anxiety, or general overwhelm"
+      whoItsFor: "Anyone experiencing work stress, panic attacks, social anxiety, or general overwhelm",
+      color: '#8b5cf6'
     }
   ];
 
   return (
-    <div style={{
-      backgroundColor: '#f5f3ff',
-      borderRadius: '20px',
-      padding: '3rem',
-      margin: '3rem 0',
-      boxShadow: '0 10px 25px rgba(124, 58, 237, 0.1)'
-    }}>
-      <h2 style={{
-        textAlign: 'center',
-        fontSize: '2.5rem',
-        fontWeight: '700',
-        color: '#7c3aed',
-        marginBottom: '3rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '1rem'
-      }}>
-        <FaLeaf /> Our Comprehensive Services
-      </h2>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Hero Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-6xl mx-auto text-center mb-16 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-3xl p-8 sm:p-12 shadow-xl"
+      >
+        <motion.div
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="inline-flex items-center bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-md mb-6"
+        >
+          <FaHeart className="text-pink-500 text-2xl mr-3" />
+          <span className="text-purple-800 text-xl font-bold">Our Services</span>
+        </motion.div>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Transformative <span className="text-purple-600">Mental Wellness</span> Services
+        </h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          At Mood Mantra, we offer a comprehensive range of evidence-based therapeutic services tailored to your unique needs. 
+          Each program is designed by our expert clinicians to provide compassionate, effective care.
+        </p>
+      </motion.div>
 
-      <p style={{
-        textAlign: 'center',
-        fontSize: '1.2rem',
-        color: '#6b7280',
-        maxWidth: '800px',
-        margin: '0 auto 3rem auto',
-        lineHeight: '1.7'
-      }}>
-        At Mind Mantra, we offer a holistic range of mental health services designed to meet you where you are in your journey. 
-        Each program is carefully crafted by our team of licensed professionals to provide effective, compassionate care.
-      </p>
+      {/* Services Grid */}
+      <div className="max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ staggerChildren: 0.1 }}
+          className="text-center mb-16"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="inline-flex items-center bg-purple-100/80 px-6 py-2 rounded-full mb-6"
+          >
+            <FaHandHoldingHeart className="text-red-500 text-2xl mr-3" />
+            <span className="text-purple-800 text-2xl font-bold">Our Offerings</span>
+          </motion.div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Holistic Healing Services
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            We combine clinical excellence with compassionate care to address your unique mental health needs.
+          </p>
+        </motion.div>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-        gap: '2rem',
-        marginBottom: '3rem'
-      }}>
-        {services.map((service, index) => (
-          <div key={index} style={{
-            backgroundColor: 'white',
-            borderRadius: '15px',
-            padding: '2rem',
-            boxShadow: '0 5px 15px rgba(0, 0, 0, 0.05)',
-            transition: 'transform 0.3s ease',
-            ':hover': {
-              transform: 'translateY(-5px)'
-            }
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1.5rem',
-              marginBottom: '1.5rem'
-            }}>
-              <div style={{
-                backgroundColor: '#f5f3ff',
-                width: '70px',
-                height: '70px',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                {service.icon}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <div className="h-3" style={{ backgroundColor: service.color }}></div>
+              <div className="p-6">
+                <div className="flex items-center mb-6">
+                  <div 
+                    className="p-4 rounded-xl mr-4 flex-shrink-0"
+                    style={{ backgroundColor: `${service.color}20` }}
+                  >
+                    {React.cloneElement(service.icon, { 
+                      className: "w-6 h-6",
+                      style: { color: service.color } 
+                    })}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800">{service.title}</h3>
+                </div>
+                
+                <p className="text-gray-600 mb-6">{service.description}</p>
+                
+                <div className="mb-6">
+                  <h4 className="flex items-center text-sm font-semibold mb-3" style={{ color: service.color }}>
+                    <FaChartLine className="mr-2" /> Key Benefits:
+                  </h4>
+                  <ul className="space-y-2">
+                    {service.benefits.map((benefit, i) => (
+                      <li key={i} className="flex items-start text-gray-600">
+                        <span className="text-purple-500 mr-2">•</span>
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="flex items-center text-sm font-semibold mb-2" style={{ color: service.color }}>
+                    <FaUsers className="mr-2" /> Who It's For:
+                  </h4>
+                  <p className="text-gray-600">{service.whoItsFor}</p>
+                </div>
               </div>
-              <h3 style={{
-                color: '#7c3aed',
-                fontSize: '1.5rem',
-                margin: 0
-              }}>
-                {service.title}
-              </h3>
-            </div>
-            
-            <p style={{ 
-              color: '#6b7280',
-              lineHeight: '1.7',
-              marginBottom: '1.5rem'
-            }}>
-              {service.description}
-            </p>
-            
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h4 style={{
-                color: '#7c3aed',
-                fontSize: '1.1rem',
-                marginBottom: '0.8rem'
-              }}>
-                Key Benefits:
-              </h4>
-              <ul style={{
-                paddingLeft: '1.5rem',
-                margin: 0,
-                color: '#6b7280'
-              }}>
-                {service.benefits.map((benefit, i) => (
-                  <li key={i} style={{ marginBottom: '0.5rem' }}>{benefit}</li>
-                ))}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Approach Section */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mt-20 bg-white rounded-3xl overflow-hidden shadow-xl"
+        >
+          <div className="md:flex">
+            <div className="p-8 md:p-12 flex-1">
+              <div className="flex items-center mb-6">
+                <div className="p-3 rounded-lg bg-purple-100 mr-4">
+                  <FaBrain className="w-6 h-6 text-purple-600" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-800">Our Unique Approach</h2>
+              </div>
+              <p className="text-gray-600 mb-6">
+                At Mood Mantra, we don't believe in one-size-fits-all therapy. Our approach combines:
+              </p>
+              <ul className="space-y-3 text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-purple-500 mr-2">•</span>
+                  <strong className="text-gray-800">Evidence-Based Practices:</strong> Clinically proven therapies tailored to your needs
+                </li>
+                <li className="flex items-start">
+                  <span className="text-purple-500 mr-2">•</span>
+                  <strong className="text-gray-800">Cultural Sensitivity:</strong> Therapists who understand Indian contexts and values
+                </li>
+                <li className="flex items-start">
+                  <span className="text-purple-500 mr-2">•</span>
+                  <strong className="text-gray-800">Holistic Perspective:</strong> Addressing mind, body, and lifestyle factors
+                </li>
+                <li className="flex items-start">
+                  <span className="text-purple-500 mr-2">•</span>
+                  <strong className="text-gray-800">Measurable Progress:</strong> Regular check-ins to track your improvement
+                </li>
               </ul>
             </div>
             
-            <div>
-              <h4 style={{
-                color: '#7c3aed',
-                fontSize: '1.1rem',
-                marginBottom: '0.8rem'
-              }}>
-                Who It's For:
-              </h4>
-              <p style={{ 
-                color: '#6b7280',
-                lineHeight: '1.7',
-                margin: 0
-              }}>
-                {service.whoItsFor}
-              </p>
+            <div className="bg-gradient-to-br from-purple-50 to-indigo-50 p-8 md:p-12 flex-1">
+              <div className="space-y-6">
+                {[
+                  {
+                    step: 1,
+                    title: "Initial Assessment",
+                    description: "We begin with a comprehensive evaluation to understand your unique needs and goals."
+                  },
+                  {
+                    step: 2,
+                    title: "Personalized Matching",
+                    description: "Our algorithm matches you with the ideal therapist based on your preferences and needs."
+                  },
+                  {
+                    step: 3,
+                    title: "Treatment Plan",
+                    description: "Your therapist creates a customized roadmap for your healing journey."
+                  },
+                  {
+                    step: 4,
+                    title: "Ongoing Support",
+                    description: "Regular sessions and check-ins to ensure continuous progress and adjustment."
+                  }
+                ].map((item, index) => (
+                  <motion.div 
+                    key={index}
+                    whileHover={{ x: 5 }}
+                    className="flex items-start"
+                  >
+                    <div className="bg-purple-600 text-white w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mr-4">
+                      {item.step}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
+                      <p className="text-gray-600">{item.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
-        ))}
-      </div>
+        </motion.div>
 
-      <div style={{
-        backgroundColor: '#7c3aed',
-        borderRadius: '15px',
-        padding: '2rem',
-        textAlign: 'center',
-        color: 'white'
-      }}>
-        <h3 style={{
-          fontSize: '1.8rem',
-          marginBottom: '1rem'
-        }}>
-          Ready to Begin Your Healing Journey?
-        </h3>
-        <p style={{
-          fontSize: '1.2rem',
-          marginBottom: '1.5rem',
-          maxWidth: '700px',
-          marginLeft: 'auto',
-          marginRight: 'auto'
-        }}>
-          Our team of compassionate professionals is here to guide you toward emotional wellness. 
-          Take the first step today.
-        </p>
-        <button style={{
-          backgroundColor: '#fcd34d',
-          color: '#7c3aed',
-          border: 'none',
-          padding: '12px 30px',
-          borderRadius: '50px',
-          fontSize: '1rem',
-          fontWeight: '600',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          ':hover': {
-            transform: 'translateY(-2px)',
-            boxShadow: '0 6px 8px rgba(0, 0, 0, 0.15)'
-          }
-        }}>
-          Book Your Session Now
-        </button>
+        {/* CTA Section */}
+        <div className="mt-20">
+          <BookAppointmentCTA />
+        </div>
       </div>
     </div>
   );

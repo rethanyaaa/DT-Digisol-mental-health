@@ -1,7 +1,7 @@
  import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext'; // Make sure to import your AppContext
-
+import { motion } from "framer-motion";
 const BookAppointmentCTA = () => {
   const navigate = useNavigate();
   const { token } = useContext(AppContext); // Get token from context
@@ -17,30 +17,81 @@ const BookAppointmentCTA = () => {
   };
 
   return (
-    <section className="py-16 px-4" style={{ backgroundColor: '#f5f3ff' }}>
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#7c3aed]">
-          Ready to Prioritize Your <span style={{ color: '#FCD34D' }}>Mental Wellness</span>
-        </h2>
-        <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-          Connect with licensed professionals who specialize in mental health care.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button
-            onClick={() => navigate('/doctors')}
-            className="px-8 py-3 bg-[#7c3aed] text-white rounded-full font-medium hover:bg-[#6d28d9] transition-colors shadow-lg"
-          >
-            Browse Doctors
-          </button>
-          <button
-            onClick={handleAssessmentClick}
-            className="px-8 py-3 bg-[#FCD34D] text-[#7c3aed] rounded-full font-medium hover:bg-[#fde68a] transition-colors shadow-lg"
-          >
-            Take Assessment
-          </button>
+      <div style={{
+          background: 'linear-gradient(to right, #7c3aed, #6d28d9)',
+          borderRadius: '20px',
+          padding: '3rem',
+          textAlign: 'center',
+          color: 'white',
+          maxWidth: '1200px',
+          margin: '0 auto',
+          boxShadow: '0 10px 25px rgba(124, 58, 237, 0.2)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <h2 style={{ 
+            fontSize: '2rem',
+            fontWeight: '600',
+            marginBottom: '1rem'
+          }}>
+            Ready to Begin Your Healing Journey?
+          </h2>
+          
+          <p style={{ 
+            color: 'rgba(255, 255, 255, 0.9)',
+            maxWidth: '600px',
+            margin: '0 auto 2rem auto',
+            lineHeight: '1.6',
+            fontSize: '1.1rem'
+          }}>
+            Our team is here to support you every step of the way. Schedule your
+            first consultation today.
+          </p>
+          
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '1rem'
+          }}>
+            <motion.button
+             onClick={() => navigate('/doctors')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                padding: '0.75rem 2rem',
+                backgroundColor: 'white',
+                color: '#7c3aed',
+                fontWeight: '600',
+                borderRadius: '12px',
+                border: 'none',
+                cursor: 'pointer',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                fontSize: '1rem'
+              }}
+            >
+              Book an Appointment
+            </motion.button>
+            
+            <motion.button
+             onClick={handleAssessmentClick}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                padding: '0.75rem 2rem',
+                backgroundColor: 'transparent',
+                color: 'white',
+                fontWeight: '600',
+                borderRadius: '12px',
+                border: '2px solid white',
+                cursor: 'pointer',
+                fontSize: '1rem'
+              }}
+            >
+              Take Assessment
+            </motion.button>
+          </div>
         </div>
-      </div>
-    </section>
   );
 };
 

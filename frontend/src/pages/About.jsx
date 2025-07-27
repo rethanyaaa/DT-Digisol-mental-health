@@ -13,660 +13,310 @@ import {
 } from 'react-icons/fa';
 import { GiMeditation, GiBrain, GiHealthNormal } from 'react-icons/gi';
 import { RiTeamFill } from 'react-icons/ri';
+import { motion } from "framer-motion";
+import BookAppointmentCTA from '../components/BookAppointment';
 
 const About = () => {
   return (
-    <div style={{
-      backgroundColor: '#f9f7ff',
-      padding: '2rem 0',
-      fontFamily: "'Poppins', sans-serif"
-    }}>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
       {/* Hero Section */}
-      <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '4rem 2rem',
-        textAlign: 'center',
-        background: 'linear-gradient(135deg, #f5f3ff 0%, #e9e4ff 100%)',
-        borderRadius: '20px',
-        marginBottom: '4rem',
-        boxShadow: '0 15px 30px rgba(124, 58, 237, 0.1)'
-      }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          backgroundColor: 'rgba(124, 58, 237, 0.1)',
-          padding: '0.5rem 1.5rem',
-          borderRadius: '50px',
-          marginBottom: '1.5rem'
-        }}>
-         <div style={{ fontSize: '3rem', display: 'flex', alignItems: 'center' }}>
-  <FaHeart style={{ color: '#e30707ff', marginRight: '1rem', fontSize: '2.4rem' }} />
-  <span style={{ color: '#7c3aed', fontWeight: '700' }}>About Mood Mantra</span>
-</div>
-        </div>
-        <h1 style={{
-          color: '#1e1b4b',
-          fontSize: '3.5rem',
-          fontWeight: '700',
-          marginBottom: '1.5rem',
-          lineHeight: '1.2'
-        }}>
-          Healing Minds, <span style={{ color: '#7c3aed' }}>Transforming Lives</span>
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-6xl mx-auto text-center mb-16 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-3xl p-8 sm:p-12 shadow-xl"
+      >
+        <motion.div
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="inline-flex items-center bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-md mb-6"
+        >
+          <FaHeart className="text-pink-500 text-2xl mr-3" />
+          <span className="text-purple-800 text-xl font-bold">About Mood Mantra</span>
+        </motion.div>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          Healing Minds, <span className="text-purple-600">Transforming Lives</span>
         </h1>
-        <p style={{
-          color: '#4b5563',
-          fontSize: '1.25rem',
-          maxWidth: '800px',
-          margin: '0 auto',
-          lineHeight: '1.7'
-        }}>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           Mood Mantra is India's most compassionate mental wellness platform, making professional therapy 
           accessible, affordable, and stigma-free for everyone. We believe in holistic healing that 
           nurtures mind, body, and soul.
         </p>
-      </div>
+      </motion.div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+      <div className="max-w-7xl mx-auto">
         {/* Our Story */}
-        <div style={{
-          display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          gap: '3rem',
-          marginBottom: '5rem',
-          alignItems: 'center'
-        }}>
-          <div style={{ flex: 1 }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              marginBottom: '1rem'
-            }}>
-              <GiBrain style={{ color: '#7c3aed', fontSize: '1.5rem', marginRight: '0.5rem' }} />
-              <h2 style={{
-                color: '#1e1b4b',
-                fontSize: '2rem',
-                fontWeight: '600'
-              }}>
-                Our Journey
-              </h2>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="md:flex gap-8 mb-16 items-center"
+        >
+          <div className="flex-1 mb-8 md:mb-0">
+            <div className="flex items-center mb-6">
+              <div className="p-3 rounded-lg bg-purple-100 mr-4">
+                <GiBrain className="w-6 h-6 text-purple-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800">Our Journey</h2>
             </div>
-            <p style={{ color: '#4b5563', lineHeight: '1.8', marginBottom: '1.5rem' }}>
+            <p className="text-gray-600 mb-4 leading-relaxed">
               Founded in 2020 by psychologist Dr. Priya Sharma and tech entrepreneur Rohan Mehta, 
               Mood Mantra began as a small counseling center in Bangalore. After witnessing the 
               devastating impact of untreated mental health issues in our communities, we set out 
               to create a solution that would break down barriers to care.
             </p>
-            <p style={{ color: '#4b5563', lineHeight: '1.8', marginBottom: '1.5rem' }}>
+            <p className="text-gray-600 mb-6 leading-relaxed">
               Today, we've grown into a national movement with over 200 certified therapists, 
               serving more than 75,000 clients across India. Our name "Mood Mantra" reflects 
               our philosophy - that daily mental health practices (mantras) can transform 
               emotional well-being (mood).
             </p>
-            <div style={{
-              backgroundColor: '#f5f3ff',
-              padding: '1.5rem',
-              borderRadius: '12px',
-              borderLeft: '4px solid #7c3aed'
-            }}>
-              <p style={{ 
-                color: '#7c3aed', 
-                fontStyle: 'italic',
-                fontWeight: '500',
-                marginBottom: '0.5rem'
-              }}>
+            <div className="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500">
+              <p className="text-purple-700 italic font-medium mb-2">
                 "Mental health is not a destination, but a journey of daily practice and self-compassion."
               </p>
-              <p style={{ color: '#6b7280' }}>- Dr. Priya Sharma, Co-Founder</p>
+              <p className="text-gray-600">- Dr. Priya Sharma, Co-Founder</p>
             </div>
           </div>
-          <div style={{
-            flex: 1,
-            backgroundColor: '#f5f3ff',
-            borderRadius: '16px',
-            padding: '2rem',
-            boxShadow: '0 20px 40px rgba(124, 58, 237, 0.15)'
-          }}>
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '1.5rem',
-              justifyContent: 'center'
-            }}>
-              <div style={{
-                backgroundColor: 'white',
-                padding: '1.5rem',
-                borderRadius: '12px',
-                flex: '1 1 200px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.03)'
-              }}>
-                <h3 style={{ 
-                  color: '#7c3aed',
-                  fontSize: '2.5rem',
-                  fontWeight: '700',
-                  marginBottom: '0.5rem'
-                }}>75K+</h3>
-                <p style={{ color: '#6b7280' }}>Lives Impacted</p>
-              </div>
-              <div style={{
-                backgroundColor: 'white',
-                padding: '1.5rem',
-                borderRadius: '12px',
-                flex: '1 1 200px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.03)'
-              }}>
-                <h3 style={{ 
-                  color: '#7c3aed',
-                  fontSize: '2.5rem',
-                  fontWeight: '700',
-                  marginBottom: '0.5rem'
-                }}>200+</h3>
-                <p style={{ color: '#6b7280' }}>Certified Therapists</p>
-              </div>
-              <div style={{
-                backgroundColor: 'white',
-                padding: '1.5rem',
-                borderRadius: '12px',
-                flex: '1 1 200px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.03)'
-              }}>
-                <h3 style={{ 
-                  color: '#7c3aed',
-                  fontSize: '2.5rem',
-                  fontWeight: '700',
-                  marginBottom: '0.5rem'
-                }}>12</h3>
-                <p style={{ color: '#6b7280' }}>Regional Languages</p>
-              </div>
-              <div style={{
-                backgroundColor: 'white',
-                padding: '1.5rem',
-                borderRadius: '12px',
-                flex: '1 1 200px',
-                textAlign: 'center',
-                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.03)'
-              }}>
-                <h3 style={{ 
-                  color: '#7c3aed',
-                  fontSize: '2.5rem',
-                  fontWeight: '700',
-                  marginBottom: '0.5rem'
-                }}>96%</h3>
-                <p style={{ color: '#6b7280' }}>Client Satisfaction</p>
-              </div>
+          
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            className="flex-1 bg-white rounded-2xl p-6 shadow-lg"
+          >
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { value: "75K+", label: "Lives Impacted", color: "bg-purple-100 text-purple-700" },
+                { value: "200+", label: "Certified Therapists", color: "bg-indigo-100 text-indigo-700" },
+                { value: "12", label: "Regional Languages", color: "bg-blue-100 text-blue-700" },
+                { value: "96%", label: "Client Satisfaction", color: "bg-green-100 text-green-700" }
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`p-4 rounded-xl text-center ${stat.color}`}
+                >
+                  <h3 className="text-3xl font-bold mb-1">{stat.value}</h3>
+                  <p className="text-sm font-medium">{stat.label}</p>
+                </motion.div>
+              ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Mission and Vision */}
-        <div style={{ marginBottom: '5rem' }}>
-          <div style={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: '2rem'
-          }}>
-            <div style={{
-              flex: 1,
-              backgroundColor: 'white',
-              borderRadius: '16px',
-              padding: '3rem',
-              boxShadow: '0 10px 30px rgba(124, 58, 237, 0.1)',
-              borderTop: '5px solid #f59e0b'
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: '1.5rem'
-              }}>
-                <FaChartLine style={{ 
-                  color: '#f59e0b',
-                  fontSize: '2rem',
-                  marginRight: '1rem'
-                }} />
-                <h3 style={{
-                  color: '#1e1b4b',
-                  fontSize: '1.75rem',
-                  fontWeight: '600'
-                }}>
-                  Our Mission
-                </h3>
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-amber-500"
+          >
+            <div className="flex items-center mb-6">
+              <div className="p-3 rounded-lg bg-amber-100 mr-4">
+                <FaChartLine className="w-6 h-6 text-amber-600" />
               </div>
-              <p style={{ 
-                color: '#4b5563', 
-                lineHeight: '1.8',
-                marginBottom: '1.5rem'
-              }}>
-                To democratize mental healthcare by removing barriers of cost, convenience, and stigma through:
-              </p>
-              <ul style={{ 
-                color: '#4b5563',
-                paddingLeft: '1.25rem',
-                marginBottom: '2rem'
-              }}>
-                <li style={{ marginBottom: '0.75rem', position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#f59e0b'
-                  }}>•</span>
-                  Affordable therapy at 60% lower cost than traditional clinics
-                </li>
-                <li style={{ marginBottom: '0.75rem', position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#f59e0b'
-                  }}>•</span>
-                  Culturally sensitive care in regional languages
-                </li>
-                <li style={{ marginBottom: '0.75rem', position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#f59e0b'
-                  }}>•</span>
-                  Preventive mental health education programs
-                </li>
-                <li style={{ position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#f59e0b'
-                  }}>•</span>
-                  Corporate partnerships for employee wellness
-                </li>
-              </ul>
-              <div style={{
-                backgroundColor: '#fffbeb',
-                padding: '1.25rem',
-                borderRadius: '8px',
-                borderLeft: '3px solid #f59e0b'
-              }}>
-                <p style={{ color: '#92400e', fontStyle: 'italic' }}>
-                  "Our goal is to make quality mental healthcare as accessible as a cup of chai."
-                </p>
-              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Our Mission</h3>
             </div>
+            <p className="text-gray-600 mb-4 leading-relaxed">
+              To democratize mental healthcare by removing barriers of cost, convenience, and stigma through:
+            </p>
+            <ul className="space-y-3 mb-6">
+              {[
+                "Affordable therapy at 60% lower cost than traditional clinics",
+                "Culturally sensitive care in regional languages",
+                "Preventive mental health education programs",
+                "Corporate partnerships for employee wellness"
+              ].map((item, index) => (
+                <li key={index} className="flex items-start text-gray-600">
+                  <span className="text-amber-500 mr-2">•</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
+              <p className="text-amber-800 italic">
+                "Our goal is to make quality mental healthcare as accessible as a cup of chai."
+              </p>
+            </div>
+          </motion.div>
 
-            <div style={{
-              flex: 1,
-              backgroundColor: 'white',
-              borderRadius: '16px',
-              padding: '3rem',
-              boxShadow: '0 10px 30px rgba(124, 58, 237, 0.1)',
-              borderTop: '5px solid #10b981'
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                marginBottom: '1.5rem'
-              }}>
-                <FaGlobe style={{ 
-                  color: '#10b981',
-                  fontSize: '2rem',
-                  marginRight: '1rem'
-                }} />
-                <h3 style={{
-                  color: '#1e1b4b',
-                  fontSize: '1.75rem',
-                  fontWeight: '600'
-                }}>
-                  Our Vision
-                </h3>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-emerald-500"
+          >
+            <div className="flex items-center mb-6">
+              <div className="p-3 rounded-lg bg-emerald-100 mr-4">
+                <FaGlobe className="w-6 h-6 text-emerald-600" />
               </div>
-              <p style={{ 
-                color: '#4b5563', 
-                lineHeight: '1.8',
-                marginBottom: '1.5rem'
-              }}>
-                We envision an India where mental wellness is prioritized and accessible to all:
-              </p>
-              <ul style={{ 
-                color: '#4b5563',
-                paddingLeft: '1.25rem',
-                marginBottom: '2rem'
-              }}>
-                <li style={{ marginBottom: '0.75rem', position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#10b981'
-                  }}>•</span>
-                  Where mental health checkups are as routine as physical exams
-                </li>
-                <li style={{ marginBottom: '0.75rem', position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#10b981'
-                  }}>•</span>
-                  Where therapy is covered by insurance providers
-                </li>
-                <li style={{ marginBottom: '0.75rem', position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#10b981'
-                  }}>•</span>
-                  Where workplaces prioritize psychological safety
-                </li>
-                <li style={{ position: 'relative', paddingLeft: '1.75rem' }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: 0,
-                    color: '#10b981'
-                  }}>•</span>
-                  Where no one suffers in silence due to stigma
-                </li>
-              </ul>
-              <div style={{
-                backgroundColor: '#ecfdf5',
-                padding: '1.25rem',
-                borderRadius: '8px',
-                borderLeft: '3px solid #10b981'
-              }}>
-                <p style={{ color: '#065f46', fontStyle: 'italic' }}>
-                  "We dream of an India where asking for help is seen as strength, not weakness."
-                </p>
-              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Our Vision</h3>
             </div>
-          </div>
+            <p className="text-gray-600 mb-4 leading-relaxed">
+              We envision an India where mental wellness is prioritized and accessible to all:
+            </p>
+            <ul className="space-y-3 mb-6">
+              {[
+                "Where mental health checkups are as routine as physical exams",
+                "Where therapy is covered by insurance providers",
+                "Where workplaces prioritize psychological safety",
+                "Where no one suffers in silence due to stigma"
+              ].map((item, index) => (
+                <li key={index} className="flex items-start text-gray-600">
+                  <span className="text-emerald-500 mr-2">•</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="bg-emerald-50 p-4 rounded-lg border-l-4 border-emerald-500">
+              <p className="text-emerald-800 italic">
+                "We dream of an India where asking for help is seen as strength, not weakness."
+              </p>
+            </div>
+          </motion.div>
         </div>
 
         {/* Our Approach */}
-        <div style={{ marginBottom: '5rem' }}>
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '3rem'
-          }}>
-            <div style={{
-              display: 'inline-block',
-              backgroundColor: 'rgba(124, 58, 237, 0.1)',
-              padding: '0.5rem 1.5rem',
-              borderRadius: '50px',
-              marginBottom: '1rem'
-            }}>
-               <div style={{ 
-  display: 'flex', 
-  alignItems: 'center', 
-  fontSize: '2rem',
-  lineHeight: '1.5'
-}}>
-  <GiMeditation style={{ 
-    color: '#7c3aed',
-    fontSize: '2rem',
-    marginRight: '1rem',
-    verticalAlign: 'middle'
-  }} />
-  <span style={{ 
-    color: '#7c3aed',
-    fontWeight: '700'
-  }}>
-    Our Methodology
-  </span>
-</div>
-            </div>
-            <h2 style={{
-              color: '#1e1b4b',
-              fontSize: '2.5rem',
-              fontWeight: '700',
-              marginBottom: '1rem'
-            }}>
-              Holistic Healing Approach
-            </h2>
-            <p style={{
-              color: '#4b5563',
-              maxWidth: '700px',
-              margin: '0 auto',
-              lineHeight: '1.8'
-            }}>
-              We combine evidence-based therapies with traditional wellness practices to address mind, 
-              body, and spirit for complete well-being.
-            </p>
-          </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <motion.div
+            initial={{ scale: 0.9 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center bg-purple-100 px-6 py-2 rounded-full mb-6"
+          >
+            <GiMeditation className="text-purple-600 text-2xl mr-3" />
+            <span className="text-purple-800 text-xl font-bold">Our Methodology</span>
+          </motion.div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Holistic Healing Approach
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            We combine evidence-based therapies with traditional wellness practices to address mind, 
+            body, and spirit for complete well-being.
+          </p>
+        </motion.div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' },
-            gap: '1.5rem'
-          }}>
-            {[
-              {
-                icon: <GiHealthNormal size={32} />,
-                title: "Clinical Excellence",
-                content: "All therapists trained in CBT, DBT, and trauma-informed care with rigorous quality standards.",
-                color: '#7c3aed'
-              },
-              {
-                icon: <FaUsers size={28} />,
-                title: "Cultural Competence",
-                content: "Specialized understanding of Indian family dynamics, workplace pressures, and societal expectations.",
-                color: '#3b82f6'
-              },
-              {
-                icon: <FaMobileAlt size={28} />,
-                title: "Tech Integration",
-                content: "Secure video sessions, mood tracking, and AI-powered therapist matching for optimal care.",
-                color: '#10b981'
-              },
-              {
-                icon: <FaLeaf size={28} />,
-                title: "Preventive Care",
-                content: "Workshops, self-help resources, and community support to maintain mental wellness.",
-                color: '#f59e0b'
-              }
-            ].map((item, index) => (
-              <div key={index} style={{
-                backgroundColor: 'white',
-                borderRadius: '12px',
-                padding: '2rem',
-                boxShadow: '0 5px 20px rgba(0, 0, 0, 0.05)',
-                transition: 'transform 0.3s, box-shadow 0.3s',
-                ':hover': {
-                  transform: 'translateY(-5px)',
-                  boxShadow: '0 15px 30px rgba(0, 0, 0, 0.1)'
-                }
-              }}>
-                <div style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '12px',
-                  backgroundColor: `${item.color}20`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '1.5rem'
-                }}>
-                  {React.cloneElement(item.icon, { color: item.color })}
-                </div>
-                <h3 style={{
-                  color: '#1e1b4b',
-                  fontSize: '1.25rem',
-                  fontWeight: '600',
-                  marginBottom: '1rem'
-                }}>
-                  {item.title}
-                </h3>
-                <p style={{
-                  color: '#4b5563',
-                  lineHeight: '1.7'
-                }}>
-                  {item.content}
-                </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {[
+            {
+              icon: <GiHealthNormal size={24} />,
+              title: "Clinical Excellence",
+              content: "All therapists trained in CBT, DBT, and trauma-informed care with rigorous quality standards.",
+              color: "bg-purple-100 text-purple-600"
+            },
+            {
+              icon: <FaUsers size={24} />,
+              title: "Cultural Competence",
+              content: "Specialized understanding of Indian family dynamics, workplace pressures, and societal expectations.",
+              color: "bg-blue-100 text-blue-600"
+            },
+            {
+              icon: <FaMobileAlt size={24} />,
+              title: "Tech Integration",
+              content: "Secure video sessions, mood tracking, and AI-powered therapist matching for optimal care.",
+              color: "bg-green-100 text-green-600"
+            },
+            {
+              icon: <FaLeaf size={24} />,
+              title: "Preventive Care",
+              content: "Workshops, self-help resources, and community support to maintain mental wellness.",
+              color: "bg-amber-100 text-amber-600"
+            }
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all"
+            >
+              <div className={`w-14 h-14 rounded-xl ${item.color} flex items-center justify-center mb-4`}>
+                {item.icon}
               </div>
-            ))}
-          </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">{item.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{item.content}</p>
+            </motion.div>
+          ))}
         </div>
 
         {/* Values Section */}
-        <div style={{
-          backgroundColor: '#7c3aed',
-          borderRadius: '16px',
-          padding: '4rem 3rem',
-          marginBottom: '5rem',
-          backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.8) 0%, rgba(109, 40, 217, 0.9) 90%)',
-          color: 'white'
-        }}>
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '3rem'
-          }}>
-            
-            <h2 style={{
-              fontSize: '2.5rem',
-              fontWeight: '700',
-              marginBottom: '1rem'
-            }}>
-              Core Values
-            </h2>
-            <p style={{
-              opacity: 0.9,
-              maxWidth: '700px',
-              margin: '0 auto',
-              lineHeight: '1.8'
-            }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-gradient-to-r from-purple-600 to-indigo-700 rounded-2xl p-8 sm:p-12 mb-16 text-white"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Core Values</h2>
+            <p className="text-purple-100 max-w-2xl mx-auto">
               These principles guide every decision we make and every interaction we have.
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', lg: 'repeat(5, 1fr)' },
-            gap: '1.5rem'
-          }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {[
               {
-                icon: <FaHandsHelping size={24} />,
+                icon: <FaHandsHelping size={20} />,
                 title: "Compassion",
                 description: "We meet every client with empathy and understanding"
               },
               {
-                icon: <FaBalanceScale size={24} />,
+                icon: <FaBalanceScale size={20} />,
                 title: "Integrity",
                 description: "Ethical practice and transparency in all we do"
               },
               {
-                icon: <FaLightbulb size={24} />,
+                icon: <FaLightbulb size={20} />,
                 title: "Innovation",
                 description: "Continually evolving to serve better"
               },
               {
-                icon: <FaGlobe size={24} />,
+                icon: <FaGlobe size={20} />,
                 title: "Accessibility",
                 description: "Breaking down barriers to care"
               },
               {
-                icon: <FaChartLine size={24} />,
+                icon: <FaChartLine size={20} />,
                 title: "Growth",
                 description: "For our clients, team, and organization"
               }
             ].map((value, index) => (
-              <div key={index} style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '12px',
-                padding: '1.5rem',
-                textAlign: 'center',
-                transition: 'transform 0.3s',
-                ':hover': {
-                  transform: 'translateY(-5px)',
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)'
-                }
-              }}>
-                <div style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '50%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 1rem'
-                }}>
-                  {React.cloneElement(value.icon, { color: 'white' })}
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/15 transition-all"
+              >
+                <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                  {value.icon}
                 </div>
-                <h3 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: '600',
-                  marginBottom: '0.5rem'
-                }}>
-                  {value.title}
-                </h3>
-                <p style={{ opacity: 0.9 }}>
-                  {value.description}
-                </p>
-              </div>
+                <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
+                <p className="text-purple-100">{value.description}</p>
+              </motion.div>
             ))}
           </div>
-        </div>
-
-        
+        </motion.div>
 
         {/* CTA Section */}
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '16px',
-          padding: '4rem 2rem',
-          textAlign: 'center',
-          boxShadow: '0 20px 40px rgba(124, 58, 237, 0.1)',
-          backgroundImage: 'linear-gradient(135deg, #f9f7ff 0%, #ffffff 100%)',
-          border: '1px solid #e9e4ff'
-        }}>
-          <h2 style={{
-            color: '#1e1b4b',
-            fontSize: '2.25rem',
-            fontWeight: '700',
-            marginBottom: '1rem'
-          }}>
-            Ready to Begin Your Healing Journey?
-          </h2>
-          <p style={{
-            color: '#4b5563',
-            maxWidth: '600px',
-            margin: '0 auto 2rem',
-            lineHeight: '1.8'
-          }}>
-            Take the first step toward emotional well-being. Our compassionate therapists are here to help.
-          </p>
-          <div style={{
-            display: 'flex',
-            gap: '1rem',
-            justifyContent: 'center'
-          }}>
-            <button style={{
-              backgroundColor: '#7c3aed',
-              color: 'white',
-              border: 'none',
-              padding: '0.75rem 2rem',
-              borderRadius: '8px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s',
-              ':hover': {
-                backgroundColor: '#6d28d9'
-              }
-            }}>
-              Book a Session
-            </button>
-            <button style={{
-              backgroundColor: 'transparent',
-              color: '#7c3aed',
-              border: '2px solid #7c3aed',
-              padding: '0.75rem 2rem',
-              borderRadius: '8px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              ':hover': {
-                backgroundColor: '#f5f3ff'
-              }
-            }}>
-              Learn More
-            </button>
-          </div>
-        </div>
+        <BookAppointmentCTA />
       </div>
     </div>
   );

@@ -3,10 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AppContext } from '../context/AppContext';
+import { motion } from "framer-motion";
+import BookAppointmentCTA from '../components/BookAppointment';
 
 const Assessment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+   const { doctors } = useContext(AppContext);
   const { backendUrl, token, userData } = useContext(AppContext);
   const [assessment, setAssessment] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -15,6 +18,7 @@ const Assessment = () => {
   const [submitting, setSubmitting] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [result, setResult] = useState(null);
+  
 
   useEffect(() => {
     const fetchAssessment = async () => {
@@ -38,20 +42,16 @@ const Assessment = () => {
       selectedOption: value
     };
     setAnswers(newAnswers);
-  };
 
-  const handleNext = () => {
+    // Auto move to next question if not last question
     if (currentQuestion < assessment.questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setTimeout(() => {
+        setCurrentQuestion(currentQuestion + 1);
+      }, 300); // Small delay for smooth transition
     }
   };
 
-  const handlePrev = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
-  };
-
+  
   const handleSubmit = async () => {
     if (answers.length !== assessment.questions.length) {
       toast.warning('Please answer all questions before submitting');
@@ -71,6 +71,7 @@ const Assessment = () => {
       );
 
       setResult(data);
+     
       setCompleted(true);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to submit assessment');
@@ -93,9 +94,9 @@ const Assessment = () => {
   if (completed && result) {
     return (
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+            <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 text-white">
               <h1 className="text-3xl font-bold">Assessment Completed</h1>
               <p className="mt-2 opacity-90">{assessment.title}</p>
             </div>
@@ -112,8 +113,7 @@ const Assessment = () => {
                   <p className="text-xl font-semibold text-green-600">{result.result}</p>
                 </div>
               </div>
-              
-              <div className="mb-8">
+                <div className="mb-8">
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Recommendations</h3>
                 <ul className="space-y-3">
                   {result.recommendations.map((rec, index) => (
@@ -128,28 +128,101 @@ const Assessment = () => {
                   ))}
                 </ul>
               </div>
-              
-              <div className="flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-4">
-                <button
-                  onClick={() => navigate('/assessments')}
-                  className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex-1 flex items-center justify-center space-x-2"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                  <span>Back to Assessments</span>
-                </button>
-                <button
-                  onClick={() => navigate('/my-assessments')}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex-1 flex items-center justify-center space-x-2"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                  <span>View All Results</span>
-                </button>
-              </div>
+            
             </div>
+          </div>
+  <div className="mb-8">
+               <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+              <div className="bg-gradient-to-r from-red-500 to-purple-600 p-6 text-white">
+                <h1 className="text-3xl font-bold">Recommended Professionals</h1>
+                <p className="mt-2 opacity-90">Based on your assessment results</p>
+              </div>
+              <ul className="mt-8 space-y-3">
+                  
+                     <div style={{ 
+                            maxWidth: '1400px',
+                            margin: '0 auto 4rem auto'
+                          }}>
+                            
+                  
+                            <div    style={{
+                               
+                              display: 'grid',
+                              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                              gap: '1.5rem'
+                            }}>
+                              {doctors.map((doctor, index) => (
+                                <motion.div
+                                 onClick={() => navigate(`/appointment/${doctor._id}`)}
+                                  key={doctor._id}
+                                  initial={{ opacity: 0, y: 20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                                  whileHover={{ scale: 1.05 }}
+                                  style={{ 
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center'
+                                  }}
+                                >
+                                  <div style={{ 
+                                    position: 'relative',
+                                    width: '180px',
+                                    height: '180px',
+                                    borderRadius: '50%',
+                                    overflow: 'hidden',
+                                    border: '4px solid white',
+                                    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)'
+                                  }}>
+                                    <img
+                                      style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                      }}
+                                      src={doctor.image}
+                                      alt={doctor.name}
+                                    />
+                                  </div>
+                                  <h3 style={{
+                                    marginTop: '1rem',
+                                    fontWeight: '600',
+                                    color: '#1f2937'
+                                  }}>{doctor.name}</h3>
+                                  <p style={{
+                                    color: '#7c3aed',
+                                    fontSize: '0.875rem'
+                                  }}>{doctor.specialization}</p>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </div>
+                </ul>
+              
+            </div>
+                
+                 <BookAppointmentCTA />
+              </div>
+          
+          <div className="mt-8 flex flex-col sm:flex-row justify-between space-y-4 sm:space-y-0 sm:space-x-4">
+            <button
+              onClick={() => navigate('/assessments')}
+              className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex-1 flex items-center justify-center space-x-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>Back to Assessments</span>
+            </button>
+            <button
+              onClick={() => navigate('/my-assessments')}
+              className="px-6 py-3 bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex-1 flex items-center justify-center space-x-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <span>View All Results</span>
+            </button>
           </div>
         </div>
       </div>
@@ -160,7 +233,7 @@ const Assessment = () => {
   const currentAnswer = answers[currentQuestion]?.selectedOption;
   const progress = ((currentQuestion + 1) / assessment.questions.length) * 100;
 
-   return (
+  return (
     <div className="min-h-screen py-12 px-4" style={{ 
       background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)'
     }}>
@@ -191,12 +264,14 @@ const Assessment = () => {
             
             <div className="space-y-3 mb-8">
               {question.options.map((option, index) => (
-                <button
+                <motion.button
                   key={index}
                   onClick={() => handleAnswerSelect(option.value)}
                   className={`w-full text-left p-4 rounded-lg border transition-all ${currentAnswer === option.value 
                     ? 'border-[#7c3aed] bg-[#f5f3ff] text-[#7c3aed]' 
                     : 'border-gray-200 hover:border-[#a78bfa] hover:bg-[#f5f3ff]'}`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center">
                     <div className={`flex-shrink-0 h-5 w-5 rounded-full border flex items-center justify-center mr-3 ${currentAnswer === option.value 
@@ -210,44 +285,22 @@ const Assessment = () => {
                     </div>
                     <span>{option.text}</span>
                   </div>
-                </button>
+                </motion.button>
               ))}
             </div>
             
-            {/* Navigation Buttons */}
-            <div className="flex justify-between space-x-4">
+            {/* Submit Button (only shown on last question) */}
+            {currentQuestion === assessment.questions.length - 1 && (
               <button
-                onClick={handlePrev}
-                disabled={currentQuestion === 0}
-                className={`flex items-center justify-center px-6 py-3 rounded-lg transition-colors ${currentQuestion === 0 
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                onClick={handleSubmit}
+                disabled={submitting || !answers[currentQuestion]}
+                className={`w-full px-6 py-3 rounded-lg transition-colors ${submitting || !answers[currentQuestion] 
+                  ? 'bg-[#a78bfa] text-white cursor-not-allowed' 
+                  : 'bg-[#7c3aed] text-white hover:bg-[#5b21b6]'}`}
               >
-                Previous
+                {submitting ? 'Submitting...' : 'Submit Assessment'}
               </button>
-              
-              {currentQuestion < assessment.questions.length - 1 ? (
-                <button
-                  onClick={handleNext}
-                  disabled={!answers[currentQuestion]}
-                  className={`flex-1 px-6 py-3 rounded-lg transition-colors ${!answers[currentQuestion] 
-                    ? 'bg-[#a78bfa] text-white cursor-not-allowed' 
-                    : 'bg-[#7c3aed] text-white hover:bg-[#5b21b6]'}`}
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  onClick={handleSubmit}
-                  disabled={submitting || !answers[currentQuestion]}
-                  className={`flex-1 px-6 py-3 rounded-lg transition-colors ${submitting || !answers[currentQuestion] 
-                    ? 'bg-[#a78bfa] text-white cursor-not-allowed' 
-                    : 'bg-[#7c3aed] text-white hover:bg-[#5b21b6]'}`}
-                >
-                  {submitting ? 'Submitting...' : 'Submit Assessment'}
-                </button>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -255,4 +308,4 @@ const Assessment = () => {
   );
 };
 
-export default Assessment;
+export default Assessment; 

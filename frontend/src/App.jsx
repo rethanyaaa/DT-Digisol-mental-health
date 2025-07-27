@@ -18,6 +18,7 @@ import WelcomeLoader from "./components/WelcomeLoader";
 import AssessmentDetailedResults from "./components/AssessmentDetailedResults";
 import Services from "./pages/Services";
 import OurTeam from "./pages/Team";
+ 
 
 // Lazy load components
 const Doctors = lazy(() => import("./pages/Doctors"));
@@ -75,6 +76,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
              <Route path="/services" element={<Services />} />
                 <Route path="/ourTeam" element={<OurTeam />} />
+                 
             <Route path="/contact" element={<Contact />} />
             <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/my-appointments" element={<MyAppointments />} />

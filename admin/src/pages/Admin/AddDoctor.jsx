@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react'
+ import React, { useContext, useState } from 'react'
 import { assets } from '@/assets/assets'
-import { Check, SquareCheckBig } from 'lucide-react'
+import { Check, SquareCheckBig, Video, Image } from 'lucide-react'
 import { AdminContext } from '@/context/AdminContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false)
+  const [docVideo, setDocVideo] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -32,6 +33,9 @@ const AddDoctor = () => {
       const formData = new FormData()
 
       formData.append('image', docImg)
+      if (docVideo) {
+        formData.append('video', docVideo)
+      }
       formData.append('name', name)
       formData.append('email', email)
       formData.append('password', password)
@@ -45,22 +49,23 @@ const AddDoctor = () => {
         JSON.stringify({ line1: address1, line2: address2 })
       )
 
-      // console log formdata
-      formData.forEach((value, key) => {
-        console.log(`${key} : ${value}`)
-      })
-
       // send data to mongodb database
       const { data } = await axios.post(
         backendUrl + '/api/admin/add-doctor',
         formData,
-        { headers: { aToken } }
+        { 
+          headers: { 
+            aToken,
+            'Content-Type': 'multipart/form-data'
+          } 
+        }
       )
 
       // ack and clear the fields
       if (data.success) {
         toast.success(data.message)
         setDocImg(false)
+        setDocVideo(false)
         setName('')
         setPassword('')
         setEmail('')
@@ -96,10 +101,12 @@ const AddDoctor = () => {
       speciality &&
       degree &&
       address1 &&
-      address2
+      address2 &&
+      docImg
     )
   }
 
+   
   return (
     <form
       onSubmit={onSubmitHandler}
@@ -109,30 +116,72 @@ const AddDoctor = () => {
         Doctor Details
       </p>
 
-      <div className='flex flex-col items-center sm:items-start justify-center gap-4 w-full motion-translate-x-in-[0%] motion-translate-y-in-[-10%] motion-duration-[0.38s] motion-ease-spring-bouncier'>
-        <div>
-          <label htmlFor='doc-img'>
-            <div className='min-w-44 p-2.5 rounded border border-gray-300 bg-gray-100 text-gray-500 flex flex-col items-center justify-center gap-2 cursor-crosshair mt-1 sm:mt-0 mb-1 sm:mb-0 active:scale-[95%] transition-all duration-75 ease-in'>
-              <img
-                className='size-32 sm:size-24 rounded-full border border-gray-300 object-contain'
-                // note: generate temporary path for uploaded img to show as the img
-                src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
-                alt=''
-              />
-              <p className='flex items-center justify-center gap-2'>
-                {docImg ? 'Uploaded' : 'Upload Photograph'}
-                {docImg ? <Check size={18} className='text-primary' /> : ''}
-              </p>
-            </div>
-          </label>
-          <input
-            onChange={e => setDocImg(e.target.files[0])}
-            type='file'
-            id='doc-img'
-            hidden
-          />
-        </div>
+      <div className='flex flex-col items-center sm:items-start justify-center gap-4 w-full'>
+        {/* File Upload Section */}
+        <div className='flex flex-col sm:flex-row gap-4 w-full'>
+          {/* Image Upload */}
+          <div>
+            <label htmlFor='doc-img'>
+              <div className='min-w-44 p-2.5 rounded border border-gray-300 bg-gray-100 text-gray-500 flex flex-col items-center justify-center gap-2 cursor-crosshair active:scale-[95%] transition-all duration-75 ease-in'>
+                <div className='relative'>
+                  <img
+                    className='size-32 sm:size-24 rounded-full border border-gray-300 object-cover'
+                    src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
+                    alt='Doctor profile'
+                  />
+                  <div className='absolute bottom-0 right-0 bg-primary text-white p-1 rounded-full'>
+                    <Image size={16} />
+                  </div>
+                </div>
+                <p className='flex items-center justify-center gap-2'>
+                  {docImg ? 'Image Uploaded' : 'Upload Photo'}
+                  {docImg && <Check size={18} className='text-primary' />}
+                </p>
+              </div>
+            </label>
+            <input
+              onChange={e => setDocImg(e.target.files[0])}
+              type='file'
+              id='doc-img'
+              accept='image/*'
+              hidden
+            />
+          </div>
 
+          {/* Video Upload */}
+          <div>
+            <label htmlFor='doc-video'>
+              <div className={`min-w-44 p-2.5 rounded border border-gray-300 ${docVideo ? 'bg-gray-100' : 'bg-gray-50'} text-gray-500 flex flex-col items-center justify-center gap-2 cursor-crosshair active:scale-[95%] transition-all duration-75 ease-in`}>
+                <div className='relative'>
+                  {docVideo ? (
+                    <video className='size-32 sm:size-24 rounded border border-gray-300 object-cover'>
+                      <source src={URL.createObjectURL(docVideo)} type={docVideo.type} />
+                    </video>
+                  ) : (
+                    <div className='size-32 sm:size-24 rounded border border-gray-300 bg-gray-100 flex items-center justify-center'>
+                      <Video size={32} className='text-gray-400' />
+                    </div>
+                  )}
+                  <div className='absolute bottom-0 right-0 bg-primary text-white p-1 rounded-full'>
+                    <Video size={16} />
+                  </div>
+                </div>
+                <p className='flex items-center justify-center gap-2'>
+                  {docVideo ? 'Video Uploaded' : 'Upload Intro Video'}
+                  {docVideo && <Check size={18} className='text-primary' />}
+                </p>
+              </div>
+            </label>
+            <input
+              onChange={e => setDocVideo(e.target.files[0])}
+              type='file'
+              id='doc-video'
+              accept='video/*'
+              hidden
+            />
+          </div>
+        </div>
+        
         <div className='flex flex-col md:flex-row justify-start items-start gap-4 sm:gap-20 text-gray-600'>
           <div className='flex flex-col items-start justify-center gap-4'>
             <div className='flex flex-col items-stretch gap-1'>
@@ -221,7 +270,7 @@ const AddDoctor = () => {
                 <option value='' disabled selected>
                   Select
                 </option>
-                <option value='Psychiatrist'>Psychiatrist</option>
+                <option value='Psychiatrist'>Psychiatrists</option>
                 <option value='Clinical Psychologists'>Clinical Psychologist</option>
                 <option value='Therapists'>Therapist</option>
                 <option value='Child and Adolescent Psychiatrists'> Child & Adolescent Psychiatrists </option>

@@ -12,7 +12,7 @@ const WelcomeLoader = () => {
       />
       <WordRotate
         duration={1500}
-        words={['Welcome to Mental Health Dashboard', 'Thanks for being patient']}
+        words={['Welcome to Mood Mantra', 'Thanks for being patient']}
       />
     </div>
   )

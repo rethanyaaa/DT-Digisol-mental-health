@@ -13,7 +13,11 @@ import { changeAvailability } from '../controllers/doctorController.js'
 
 const adminRouter = express.Router()
 
-adminRouter.post('/add-doctor', authAdmin, upload.single('image'), addDoctor)
+// In your route
+adminRouter.post('/add-doctor', authAdmin, upload.fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'video', maxCount: 1 }
+]), addDoctor);
 adminRouter.post('/login', loginAdmin)
 adminRouter.post('/all-doctors', authAdmin, allDoctors)
 adminRouter.post('/change-availability', authAdmin, changeAvailability)

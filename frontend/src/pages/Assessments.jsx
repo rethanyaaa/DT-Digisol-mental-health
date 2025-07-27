@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 const Assessments = () => {
   const { userData, backendUrl, token } = useContext(AppContext);
@@ -26,140 +27,132 @@ const Assessments = () => {
 
   if (loading) {
     return (
-      <div style={{
-        backgroundColor: '#efdcf8ff',
-        minHeight: '100vh',
-        padding: '2rem',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <div className="text-center py-8" style={{ color: '#7c3aed' }}>Loading assessments...</div>
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-8">
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4"
+          ></motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-purple-700 text-lg font-medium"
+          >
+            Loading assessments...
+          </motion.p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div style={{
-      backgroundColor: '#efdcf8ff',
-      minHeight: '100vh',
-      padding: '2rem',
-    }}>
-      {/* Header Section */}
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        marginBottom: '3rem'
-      }}>
-        <h1 style={{
-          fontSize: '2.5rem',
-          fontWeight: '700',
-          color: '#7c3aed',
-          marginBottom: '1rem'
-        }}>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      {/* Hero Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-4xl mx-auto text-center mb-16"
+      >
+        <h1 className="text-4xl md:text-5xl font-bold text-purple-900 mb-4">
           Mental Health Assessments
         </h1>
-        <p style={{
-          fontSize: '1.2rem',
-          color: '#6b46c1',
-          maxWidth: '700px'
-        }}>
+        <p className="text-xl text-purple-700 mb-8">
           Take one of our self-assessment quizzes to evaluate your mental health status and get personalized recommendations.
         </p>
-      </div>
+        <div className="w-20 h-1 bg-purple-400 mx-auto rounded-full"></div>
+      </motion.div>
 
       {/* Assessments Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '2rem',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        {assessments.map((assessment) => (
-          <div key={assessment._id} style={{
-            backgroundColor: 'white',
-            borderRadius: '20px',
-            padding: '2rem',
-            boxShadow: '0 10px 25px rgba(167, 139, 250, 0.2)',
-            transition: 'transform 0.3s ease',
-            ':hover': {
-              transform: 'translateY(-5px)'
-            }
-          }}>
-            <h2 style={{
-              fontSize: '1.6rem',
-              fontWeight: '600',
-              color: '#7c3aed',
-              marginBottom: '1rem'
-            }}>{assessment.title}</h2>
-            <p style={{
-              color: '#6b46c1',
-              marginBottom: '2rem'
-            }}>{assessment.description}</p>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <span style={{
-                fontSize: '0.9rem',
-                color: '#a78bfa'
-              }}>
-                {assessment.questions.length} questions
-              </span>
-              <Link
-                to={`/assessment/${assessment._id}`}
-                style={{
-                  padding: '0.75rem 1.5rem',
-                  backgroundColor: '#7c3aed',
-                  color: 'white',
-                  borderRadius: '50px',
-                  fontWeight: '600',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s ease',
-                  ':hover': {
-                    backgroundColor: '#6b46c1',
-                    transform: 'translateY(-2px)'
-                  }
-                }}
-              >
-                Start Assessment
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
+      <div className="max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ staggerChildren: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {assessments.map((assessment) => (
+            <motion.div
+              key={assessment._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5 }}
+              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <div className="h-3 bg-gradient-to-r from-purple-400 to-indigo-500"></div>
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="p-3 rounded-lg bg-purple-100 mr-4">
+                    <svg 
+                      className="w-6 h-6 text-purple-600" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24" 
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth="2" 
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                      ></path>
+                    </svg>
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-800">{assessment.title}</h2>
+                </div>
+                <p className="text-gray-600 mb-6">{assessment.description}</p>
+                
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                    {assessment.questions.length} questions
+                  </span>
+                  <Link
+                    to={`/assessment/${assessment._id}`}
+                    className="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                  >
+                    Start Now
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
-      {userData && (
-        <div style={{
-          marginTop: '4rem',
-          textAlign: 'center'
-        }}>
-          <h2 style={{
-            fontSize: '1.8rem',
-            fontWeight: '600',
-            color: '#7c3aed',
-            marginBottom: '1rem'
-          }}>Your Assessment History</h2>
-          <Link
-            to="/my-assessments"
-            style={{
-              color: '#7c3aed',
-              fontWeight: '600',
-              textDecoration: 'none',
-              ':hover': {
-                textDecoration: 'underline'
-              }
-            }}
+        {userData && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-center mt-20"
           >
-            View your past assessment results →
-          </Link>
-        </div>
-      )}
+            <h2 className="text-2xl md:text-3xl font-semibold text-purple-900 mb-4">
+              Track Your Progress
+            </h2>
+            <Link
+              to="/my-assessments"
+              className="inline-flex items-center text-lg text-purple-600 font-medium hover:text-purple-800 transition-colors duration-300"
+            >
+              View your assessment history
+              <svg 
+                className="w-5 h-5 ml-2" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth="2" 
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </Link>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
