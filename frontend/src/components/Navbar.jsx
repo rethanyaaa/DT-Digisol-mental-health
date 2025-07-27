@@ -101,6 +101,7 @@ const Navbar = () => {
         className="transition-all duration-300 hover:scale-105"
         style={{
           maxWidth: "13%",
+          marginLeft: '12px',
           height: "auto",
         }}
       />
