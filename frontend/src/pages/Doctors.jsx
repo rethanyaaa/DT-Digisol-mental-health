@@ -180,7 +180,7 @@ const Doctors = () => {
             <div className="flex justify-between items-start mb-4">
               <div className="min-w-0">
                 <h3 className="text-lg font-bold text-gray-900 truncate">
-                  Dr. {doctor.name}
+                  {doctor.name}
                 </h3>
                 <p className="text-purple-600 font-medium text-sm truncate">
                   {doctor.speciality || 'General Practitioner'}
