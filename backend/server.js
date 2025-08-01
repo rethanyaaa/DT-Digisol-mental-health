@@ -29,8 +29,8 @@ app.use(express.json({ limit: "400mb" }));
 // CORS configuration for both frontend origins
 const corsOptions = {
   origin: [
-    "https://dtdigisol-mental-health.netlify.app/",
-    "https://dtdigisol-admin.netlify.app/",
+    "https://dtdigisol-mental-health.netlify.app",
+    "https://dtdigisol-admin.netlify.app",
    
   ].filter(Boolean),
   credentials: true,
