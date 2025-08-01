@@ -42,7 +42,7 @@ const corsOptions = {
     "Authorization",
     "x-auth-token",
     "token",
-    "dtoken",, 'atoken'
+    "dtoken",'atoken'
   ], // ✅ Add "token"
 };
 
