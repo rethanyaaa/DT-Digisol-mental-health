@@ -195,11 +195,53 @@ const adminDashboard = async (req, res) => {
   }
 }
 
+// Api to get all patients list for admin panel
+const allPatients = async (req, res) => {
+  try {
+    const patients = await userModel.find({}).select('-password')
+    res.json({ success: true, patients })
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `Server error: ${error.message}` })
+  }
+}
+
+// Api to get detailed patient information including appointments
+const getPatientDetails = async (req, res) => {
+  try {
+    const { patientId } = req.params
+    
+    const patient = await userModel.findById(patientId).select('-password')
+    if (!patient) {
+      return res.status(404).json({ success: false, message: 'Patient not found' })
+    }
+
+    // Get patient's appointments
+    const appointments = await appointmentModel.find({ userId: patientId })
+      .populate('docId', 'name speciality image')
+      .sort({ date: -1 })
+
+    const patientDetails = {
+      ...patient.toObject(),
+      appointments: appointments
+    }
+
+    res.json({ success: true, patient: patientDetails })
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `Server error: ${error.message}` })
+  }
+}
+
 export {
   addDoctor,
   loginAdmin,
   allDoctors,
   appointmentsAdmin,
   appointmentCancel,
-  adminDashboard
+  adminDashboard,
+  allPatients,
+  getPatientDetails
 }

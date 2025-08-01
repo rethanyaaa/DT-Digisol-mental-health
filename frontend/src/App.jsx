@@ -1,4 +1,4 @@
- import React, { useState, useEffect, Suspense, lazy } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom"; // Added useLocation
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -18,10 +18,12 @@ import WelcomeLoader from "./components/WelcomeLoader";
 import AssessmentDetailedResults from "./components/AssessmentDetailedResults";
 import Services from "./pages/Services";
 import OurTeam from "./pages/Team";
- 
 
 // Lazy load components
 const Doctors = lazy(() => import("./pages/Doctors"));
+const DeviceTest = lazy(() => import("./pages/DeviceTest"));
+const PatientWaitingRoom = lazy(() => import("./pages/PatientWaitingRoom"));
+const Consultation = lazy(() => import("./pages/Consultation"));
 
 // ScrollToTop component
 const ScrollToTop = () => {
@@ -59,7 +61,7 @@ const App = () => {
   return (
     <>
       {showLoader && loaderComponent}
-      <div  >
+      <div>
         <ToastContainer
           theme="light"
           className="scale-95  sm:scale-100 sm:mt-16"
@@ -74,9 +76,9 @@ const App = () => {
             <Route path="/doctors/:speciality" element={<Doctors />} />
             <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
-             <Route path="/services" element={<Services />} />
-                <Route path="/ourTeam" element={<OurTeam />} />
-                 
+            <Route path="/services" element={<Services />} />
+            <Route path="/ourTeam" element={<OurTeam />} />
+
             <Route path="/contact" element={<Contact />} />
             <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/my-appointments" element={<MyAppointments />} />
@@ -89,6 +91,14 @@ const App = () => {
             <Route
               path="/assessment-results/:id"
               element={<AssessmentDetailedResults />}
+            />
+
+            {/* Video consultation routes */}
+            <Route path="/device-test" element={<DeviceTest />} />
+            <Route path="/consultation/:roomId" element={<Consultation />} />
+            <Route
+              path="/waiting-room/:roomId"
+              element={<PatientWaitingRoom />}
             />
           </Routes>
         </Suspense>

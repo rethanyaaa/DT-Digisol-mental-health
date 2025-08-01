@@ -4,6 +4,7 @@ import {
   loginDoctor,
   appointmentsDoctor,
   appointmentComplete,
+  completeAppointmentViaVideoCall,
   appointmentCancel,
   doctorDashboard,
   doctorProfile,
@@ -17,6 +18,7 @@ doctorRouter.get('/list', doctorList)
 doctorRouter.post('/login', loginDoctor)
 doctorRouter.get('/appointments', authDoctor, appointmentsDoctor)
 doctorRouter.post('/complete-appointment', authDoctor, appointmentComplete)
+doctorRouter.post('/complete-video-appointment', authDoctor, completeAppointmentViaVideoCall)
 doctorRouter.post('/cancel-appointment', authDoctor, appointmentCancel)
 doctorRouter.get('/dashboard', authDoctor, doctorDashboard)
 doctorRouter.get('/profile', authDoctor, doctorProfile)

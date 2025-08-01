@@ -1,8 +1,9 @@
 import { assets } from '@/assets/assets'
 import { AdminContext } from '@/context/AdminContext'
 import { AppContext } from '@/context/AppContext'
-import { CalendarDays, Loader2, X } from 'lucide-react'
+import { CalendarDays, Loader2, X, Users, ArrowRight } from 'lucide-react'
 import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Tooltip,
   TooltipContent,
@@ -11,7 +12,7 @@ import {
 } from '@/components/ui/tooltip'
 
 const Dashboard = () => {
-  const { aToken, getDashData, cancelAppointment, dashData } =
+  const { aToken, getDashData, cancelAppointment, dashData, getAllPatients, patients } =
     useContext(AdminContext)
 
   const [selectedImage, setSelectedImage] = useState(null)
@@ -23,10 +24,11 @@ const Dashboard = () => {
     if (aToken) {
       const minLoadingTime = new Promise(resolve => setTimeout(resolve, 100))
       const dataFetch = getDashData()
+      const patientsFetch = getAllPatients()
 
-      Promise.all([minLoadingTime, dataFetch]).then(() => setIsLoading(false))
+      Promise.all([minLoadingTime, dataFetch, patientsFetch]).then(() => setIsLoading(false))
     }
-  }, [aToken])
+  }, [aToken, getDashData, getAllPatients])
 
   if (isLoading) {
     return (
@@ -112,6 +114,61 @@ const Dashboard = () => {
                   Appointments
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* ------------ Patient Details Section ------------ */}
+          <div className='bg-gray-100 w-[90vw] sm:w-auto border px-4 pt-5 pb-2.5 rounded-xl'>
+            <div className='flex items-center justify-between pb-3.5 uppercase text-gray-700 border-b'>
+              <div className='flex items-center gap-3'>
+                <Users size={24} strokeWidth={2} />
+                <p className='text-base sm:text-lg font-semibold tracking-wide'>
+                  All Patients
+                </p>
+              </div>
+              <Link
+                to="/patients"
+                className='flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors'
+              >
+                <span>View All</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+
+            {/* patients info */}
+            <div className='mt-5'>
+              {patients && patients.length > 0 ? (
+                patients.map((patient, index) => (
+                  <div
+                    className='flex items-center gap-2 sm:gap-4 px-3 py-3 sm:px-6 sm:py-4 bg-white rounded-lg mb-1.5'
+                    key={patient._id}
+                  >
+                    <img
+                      className='size-9 sm:size-12 aspect-square object-cover rounded-full bg-gray-700 cursor-pointer hover:opacity-80 select-none'
+                      draggable='false'
+                      src={patient.image}
+                      alt='patient img'
+                      onClick={() => setSelectedImage(patient.image)}
+                    />
+                    {/* info */}
+                    <div className='flex-1'>
+                      <p className='text-sm sm:text-lg font-medium'>
+                        {patient.name}
+                      </p>
+                      <p className='text-gray-600 text-sm sm:text-base'>
+                        {patient.email}
+                      </p>
+                      <p className='text-gray-500 text-xs sm:text-sm'>
+                        Joined: {new Date(patient.date).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className='text-center py-8 text-gray-500'>
+                  <p>No patients found</p>
+                </div>
+              )}
             </div>
           </div>
 

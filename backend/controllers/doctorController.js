@@ -91,6 +91,65 @@ const appointmentComplete = async (req, res) => {
   }
 }
 
+// API to complete appointment via video call
+const completeAppointmentViaVideoCall = async (req, res) => {
+  try {
+    const { docId, appointmentId, roomId } = req.body
+    
+    // Find the appointment
+    const appointmentData = await appointmentModel.findById(appointmentId)
+    if (!appointmentData) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Appointment not found' 
+      })
+    }
+
+    // Verify the doctor owns this appointment
+    if (appointmentData.docId !== docId) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Unauthorized to complete this appointment' 
+      })
+    }
+
+    // Update appointment as completed
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      isCompleted: true
+    })
+
+    // Update consultation status if roomId is provided
+    if (roomId) {
+      try {
+        const consultationModel = (await import('../models/consultationModel.js')).default
+        await consultationModel.findOneAndUpdate(
+          { roomId },
+          {
+            status: 'completed',
+            endTime: new Date()
+          }
+        )
+      } catch (consultationError) {
+        console.log('Error updating consultation status:', consultationError)
+        // Don't fail the request if consultation update fails
+      }
+    }
+
+    res.json({ 
+      success: true, 
+      message: 'Video consultation completed successfully. 🎉',
+      appointmentId,
+      roomId
+    })
+  } catch (error) {
+    console.log('Error completing appointment via video call:', error)
+    res.status(500).json({ 
+      success: false, 
+      message: `Server error: ${error.message}` 
+    })
+  }
+}
+
 // API to cancel appointment from doctor panel
 const appointmentCancel = async (req, res) => {
   try {
@@ -193,6 +252,7 @@ export {
   loginDoctor,
   appointmentsDoctor,
   appointmentComplete,
+  completeAppointmentViaVideoCall,
   appointmentCancel,
   doctorDashboard,
   doctorProfile,
